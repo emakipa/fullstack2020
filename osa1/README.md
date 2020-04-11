@@ -2,4 +2,5 @@
 
 #### osa1 exercises
 
-* kurssitiedot
+* kurssitiedot  (exercises 1.1 - 1.5)
+* unicafe       (exercises 1.6 - 1.11)
