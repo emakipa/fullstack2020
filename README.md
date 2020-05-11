@@ -11,3 +11,7 @@
 * [anekdootit](https://github.com/emakipa/fullstack2020/tree/master/osa1/anekdootit)
 * [kurssitiedot](https://github.com/emakipa/fullstack2020/tree/master/osa1/kurssitiedot)
 * [unicafe](https://github.com/emakipa/fullstack2020/tree/master/osa1/unicafe)
+
+### osa2
+
+* [kurssitiedot](https://github.com/emakipa/fullstack2020/tree/master/osa2/kurssitiedot)
