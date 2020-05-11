@@ -2,4 +2,4 @@
 
 #### osa2 exercises
 
-* kurssitiedot  (exercise 2.1)
+* kurssitiedot  (exercises 2.1 - 2.2)
