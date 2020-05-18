@@ -16,3 +16,4 @@
 
 * [kurssitiedot](https://github.com/emakipa/fullstack2020/tree/master/osa2/kurssitiedot)
 * [puhelinluettelo](https://github.com/emakipa/fullstack2020/tree/master/osa2/puhelinluettelo)
+* [maiden-tiedot](https://github.com/emakipa/fullstack2020/tree/master/osa2/maiden-tiedot)

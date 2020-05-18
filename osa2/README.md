@@ -4,3 +4,4 @@
 
 * kurssitiedot      (exercises 2.1 - 2.5)
 * puhelinluettelo   (exercises 2.6 - 2.11)
+* maide-tiedot      (exercise 2.12)
