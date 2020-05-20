@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios';
-import './App.css';
-import Filter from './components/Filter';
-import Countries from './components/Countries';
+import './App.css'
+import axios from 'axios'
+import Countries from './components/Countries'
+import Filter from './components/Filter'
 
 const App = () => {
-  const [ countries, setCountries] = useState([]) 
+  const [ countries, setCountries ] = useState([])
   const [ newFilter, setNewFilter ] = useState('')
 
-  // get data from server
+  // get country data
   useEffect(() => {
     axios
       .get('https://restcountries.eu/rest/v2/all')
       .then(response => {
-        // set initial state data
+        // set country data
         setCountries(response.data)
       })
   }, [])
@@ -26,9 +26,9 @@ const App = () => {
   return (
     <div>      
       <Filter text="find countries " value={newFilter} onChange={handleFilterChange} />
-      <Countries countries={countries} newFilter={newFilter} />
+      <Countries countries={countries} newFilter={newFilter} handleFilterChange={handleFilterChange} />
     </div>
   )
 }
 
-export default App;
+export default App
