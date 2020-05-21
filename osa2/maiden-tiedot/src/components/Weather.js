@@ -12,7 +12,7 @@ const Weather = ({ location }) => {
     axios
       .get(query) 
       .then(response => {
-      // set weather data
+        // set weather data
         setWeather(response.data)
       })
   }, [query])
@@ -22,7 +22,7 @@ const Weather = ({ location }) => {
       <p>
         <b>temperature:</b> {weather.current ? weather.current.temperature : ''} Celsius      
       </p>
-      <img src={weather.current ? weather.current.weather_icons : ''} alt='img' width="50" height="50" />     
+      <img src={weather.current ? weather.current.weather_icons[0] : ''} alt='img' width="50" height="50" />     
       <p>
         <b>wind:</b> {weather.current ? weather.current.wind_speed : ''} kph direction {weather.current ? weather.current.wind_dir : ''}      
       </p>       
