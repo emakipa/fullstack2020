@@ -94,18 +94,18 @@ const App = () => {
               setMessage(null)
             }, 5000)
             setNewName('')
-        setNewNumber('')
+            setNewNumber('')
           })    
-        .catch(error => {
-          setMessage(
-            `Information of ${updatedPerson.name} has already been removed from server`
-          )
-          setMessageType('error')
-          setTimeout(() => {
-            setMessage(null)
-          }, 5000)
-          setPersons(persons.filter(p => p.id !== id))
-        })      
+          .catch(error => {
+            setMessage(
+              `Information of ${updatedPerson.name} has already been removed from server`
+            )
+            setMessageType('error')
+            setTimeout(() => {
+              setMessage(null)
+            }, 5000)
+            setPersons(persons.filter(p => p.id !== id))
+          })      
   }
 
   // filter input
