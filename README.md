@@ -1,5 +1,7 @@
 ## Full stack open 2020 exercises
 
+Exercise submissions for [Full stack open 2020](https://fullstackopen.com/en) course by University of Helsinki.
+
 ### osa0
 
 * [tehtava_04_uusi_muistiinpano.png](https://github.com/emakipa/fullstack2020/blob/master/osa0/tehtava_04_uusi_muistiinpano.png)
@@ -17,3 +19,7 @@
 * [kurssitiedot](https://github.com/emakipa/fullstack2020/tree/master/osa2/kurssitiedot)
 * [puhelinluettelo](https://github.com/emakipa/fullstack2020/tree/master/osa2/puhelinluettelo) 
 * [maiden-tiedot](https://github.com/emakipa/fullstack2020/tree/master/osa2/maiden-tiedot)
+
+### osa3
+
+* [puhelinluettelon-backend](https://github.com/emakipa/fullstack2020-osa3)
