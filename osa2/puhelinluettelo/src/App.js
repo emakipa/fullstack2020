@@ -64,12 +64,12 @@ const App = () => {
           setTimeout(() => {
             setMessage(null)
           }, 3000) 
-        })  
+        })
         setMessage(`Added ${newName}`)
         setMessageType('success')
         setTimeout(() => {
           setMessage(null)
-        }, 3000)    
+        }, 3000)      
     } else {
       // person already exists, number to be updated
       
