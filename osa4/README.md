@@ -2,4 +2,4 @@
 
 #### osa4 exercises
 
-* blogilista      (exercises 4.1 - 4.7)
+* blogilista      (exercises 4.1 - 4.14)
