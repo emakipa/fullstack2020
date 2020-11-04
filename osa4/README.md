@@ -2,4 +2,4 @@
 
 #### osa4 exercises
 
-* blogilista      (exercises 4.1 - 4.14)
+* [blogilistan-backend](https://github.com/emakipa/fullstack2020-osa4) (exercises 4.1 - 4.22)
