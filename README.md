@@ -27,3 +27,7 @@ Exercise submissions for [Full stack open 2020](https://fullstackopen.com/en) co
 ### osa4
 
 * [blogilistan-backend](https://github.com/emakipa/fullstack2020-osa4)
+
+### osa5
+
+* [blogilista](https://github.com/emakipa/fullstack2020/tree/master/osa5/blogilista)
