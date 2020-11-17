@@ -42,7 +42,7 @@ const App = () => {
       blogService.setToken(loggedUser.token)
       setUser(loggedUser)
     } catch (exception) {
-      setMessage('wrong username or password')
+      setMessage(exception.response.data.error)
       setMessageType('error')
       setTimeout(() => {
         setMessage(null)
@@ -66,7 +66,7 @@ const App = () => {
       }, 5000)
       blogFormRef.current.toggleVisibility()
     } catch (exception) {
-      setMessage('Blog title or/and url undefined')
+      setMessage(exception.response.data.error)
       setMessageType('error')
       setTimeout(() => {
         setMessage(null)
@@ -86,7 +86,7 @@ const App = () => {
         setMessage(null)
       }, 2000)
     } catch (exception) {
-      setMessage('Blog not found')
+      setMessage(exception.response.data.error)
       setMessageType('error')
       setTimeout(() => {
         setMessage(null)
@@ -107,8 +107,8 @@ const App = () => {
         setTimeout(() => {
           setMessage(null)
         }, 5000)
-      } catch (error) {
-        setMessage('Removing blog is not authorized')
+      } catch (exception) {
+        setMessage(exception.response.data.error)
         setMessageType('error')
         setTimeout(() => {
           setMessage(null)

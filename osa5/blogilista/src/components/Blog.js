@@ -16,29 +16,29 @@ const Blog = ({ blog, onClickUpdate, onClickRemove, user }) => {
   }
 
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className='blog'>
       {viewAll
         ?
         <div>
           <div>
-            {blog.title} {blog.author} <button onClick={handleViewAll}>{viewAll ? 'hide' : 'view'}</button>
+            {blog.title} {blog.author} <button id='hide-button' onClick={handleViewAll}>{viewAll ? 'hide' : 'view'}</button>
           </div>
           <div>
             {blog.url}
           </div>
           <div>
-            {blog.likes} <button onClick={onClickUpdate}>like</button>
+            likes {blog.likes} <button id='like-button' onClick={onClickUpdate}>like</button>
           </div>
           <div>
             {user.name}
           </div>
           <div>
-            {blog.user.name === user.name ? <button onClick={onClickRemove}>remove</button> : null}
+            {blog.user.name === user.name ? <button id='remove-button' onClick={onClickRemove}>remove</button> : null}
           </div>
         </div>
         :
         <div>
-          {blog.title} {blog.author} <button onClick={handleViewAll}>{viewAll ? 'hide' : 'view'}</button>
+          {blog.title} {blog.author} <button id='view-button' onClick={handleViewAll}>{viewAll ? 'hide' : 'view'}</button>
         </div>
       }
     </div>

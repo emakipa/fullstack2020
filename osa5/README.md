@@ -2,4 +2,4 @@
 
 #### osa5 exercises
 
-* blogilista      (exercises 5.1 - 5.12)
+* blogilista      (exercises 5.1 - 5.22)
