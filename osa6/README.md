@@ -2,4 +2,4 @@
 
 #### osa6 exercises
 
-* unicafe-redux      (exercises 6.1 - )
+* unicafe-redux      (exercises 6.1 - 6.2)
