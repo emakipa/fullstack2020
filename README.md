@@ -35,3 +35,4 @@ Exercise submissions for [Full stack open 2020](https://fullstackopen.com/en) co
 ### osa6
 
 * [unicafe-redux](https://github.com/emakipa/fullstack2020/tree/master/osa6/unicafe-redux)
+* [redux-anecdotes](https://github.com/emakipa/fullstack2020/tree/master/osa6/redux-anecdotes)
