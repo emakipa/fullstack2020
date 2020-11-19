@@ -2,7 +2,7 @@
 export const setNotification = (notification) => {
   return {
     type: 'NOTIFY',
-    data: notification 
+    notification: notification 
   } 
 }
 
@@ -18,7 +18,7 @@ const initialState =  ''
 const notificationReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'NOTIFY':
-      return action.data
+      return action.notification
       case 'NOT_NOTIFY':
         return initialState  
     default:
