@@ -23,7 +23,6 @@ const AnecdoteList = () => {
   const dispatch = useDispatch()
 
   const voteAnecdote = (id) => {
-    console.log('vote', id)
     dispatch(vote(id))
   }
 
@@ -36,8 +35,10 @@ const AnecdoteList = () => {
 
   return (
     <div>
-      {anecdotes.sort((a, b) => b.votes - a.votes).filter(a =>
-      (a.content.toLowerCase().includes(anecdoteFilter.toLowerCase()))).map(anecdote =>
+      {anecdotes
+        .sort((a, b) => b.votes - a.votes)
+        .filter(a => (a.content.toLowerCase().includes(anecdoteFilter.toLowerCase())))
+        .map(anecdote =>
         <Anecdote
           key={anecdote.id}
           anecdote={anecdote}
