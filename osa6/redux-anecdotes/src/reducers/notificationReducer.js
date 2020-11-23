@@ -1,15 +1,15 @@
 //set notification
-export const setNotification = (notification) => {
-  return {
-    type: 'NOTIFY',
-    notification: notification 
-  } 
-}
-
-//remove notification
-export const removeNotification = () => {
-  return {
-    type: 'NOT_NOTIFY'
+export const setNotification = (notification, time) => {
+  return async dispatch => {
+    dispatch({
+      type: 'NOTIFY',
+      notification: notification
+    })
+    setTimeout(() => {
+      dispatch({
+        type: 'NOT_NOTIFY'
+      })
+    }, time * 1000)
   } 
 }
 

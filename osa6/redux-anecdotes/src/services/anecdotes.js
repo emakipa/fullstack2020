@@ -8,14 +8,21 @@ const getAll = async () => {
   return response.data
 }
 
-//save creaated anecdote to server
+//save created anecdote to server
 const saveNew = async (content) => {
   const object = { content, votes: 0 }
   const response = await axios.post(baseUrl, object)
   return response.data
 }
 
+//update anecdote votes to server
+const update = async (updatedAnecdote) => {
+  const response = await axios.put(`${baseUrl}/${updatedAnecdote.id}`, updatedAnecdote)
+  return response.data
+}
+
 export default { 
   getAll,
-  saveNew
+  saveNew,
+  update
  }
