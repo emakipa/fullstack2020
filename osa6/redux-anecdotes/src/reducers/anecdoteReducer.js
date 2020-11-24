@@ -42,7 +42,6 @@ const reducer = (state = [], action) => {
     case 'NEW_ANECDOTE':
       //add new anedote
       return [...state, action.data]
-      //return state.concat(action.data)
     case 'VOTE':
       //anecdote id
       const id = action.data.id
