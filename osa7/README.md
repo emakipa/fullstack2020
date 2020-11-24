@@ -2,4 +2,4 @@
 
 #### osa7 exercises
 
-* routed-anecdotes    (exercises  - )
+* routed-anecdotes    (exercises 7.1 - )
