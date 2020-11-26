@@ -1,7 +1,5 @@
-  
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-
 
 const useField = (type) => {
   const [value, setValue] = useState('')
@@ -17,6 +15,7 @@ const useField = (type) => {
   }
 }
 
+//custom hook useResource
 const useResource = (baseUrl) => {
   const [resources, setResources] = useState([])
 
@@ -24,12 +23,13 @@ const useResource = (baseUrl) => {
     // get objects
     const getObjects = async () => {
       const response = await axios.get(baseUrl)
-        // set objects
+      // set objects
       setResources(response.data)
     }
     getObjects()
   }, [baseUrl])
 
+  //create new object
   const create = async (resource) => {
     const response = await axios.post(baseUrl, resource)
     setResources(resources.concat(response.data))
