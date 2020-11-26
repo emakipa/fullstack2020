@@ -6,6 +6,7 @@ import {
   useHistory,
   useRouteMatch
 } from "react-router-dom"
+import  { useField } from './hooks/index'
 
 const Menu = () => {
   const padding = {
@@ -20,13 +21,15 @@ const Menu = () => {
   )
 }
 
-const Anecdote = ({ anecdote }) => {
+const Anecdote = ({ anecdote, vote }) => {
   return (
     <div>
       <h2>{anecdote.content} by {anecdote.author}</h2>
-      <div>has {anecdote.votes} votes</div>
+      <div>has {anecdote.votes} votes
+        <button onClick={() => vote(anecdote.id)}>vote</button>
+      </div>
       <br />
-      <div>for more info, see {anecdote.info}</div>
+      <div>for more info, see <a href={anecdote.info}> {anecdote.info} </a></div>
     </div>
   )
 }
@@ -67,21 +70,28 @@ const Footer = () => (
 )
 
 const CreateNew = (props) => {
-  const [content, setContent] = useState('')
-  const [author, setAuthor] = useState('')
-  const [info, setInfo] = useState('')
+  //custom hook useField used
+  const content = useField('text')
+  const author = useField('text')
+  const info = useField('text')
 
-  const history = useHistory()
+  let history = useHistory()
 
   const handleSubmit = (e) => {
     e.preventDefault()
     props.addNew({
-      content: content,
-      author: author,
-      info: info,
+      content: content.input.value,
+      author: author.input.value,
+      info: info.input.value,
       votes: 0
     })
     history.push('/')
+  }
+
+  const handleReset = () => {
+    content.clear()
+    author.clear()
+    info.clear()
   }
 
   return (
@@ -90,17 +100,18 @@ const CreateNew = (props) => {
       <form onSubmit={handleSubmit}>
         <div>
           content
-          <input name='content' value={content} onChange={(e) => setContent(e.target.value)} />
+          <input {...content.input} />
         </div>
         <div>
           author
-          <input name='author' value={author} onChange={(e) => setAuthor(e.target.value)} />
+          <input {...author.input} />
         </div>
         <div>
           url for more info
-          <input name='info' value={info} onChange={(e)=> setInfo(e.target.value)} />
+          <input {...info.input} />
         </div>
-        <button>create</button>
+        <button type='submit'>create</button>
+        <button type='button' onClick={(handleReset)}>reset</button>
       </form>
     </div>
   )
@@ -160,16 +171,16 @@ const App = () => {
       <Menu />
       {notification}
       <Switch>
-        <Route path="/about">
+        <Route path='/about'>
           <About />
         </Route>
-        <Route path="/create">
+        <Route path='/create'>
           <CreateNew addNew={addNew} />
         </Route>
-        <Route path="/:id">
-          <Anecdote anecdote={anecdote} />
+        <Route path='/:id'>
+          <Anecdote anecdote={anecdote} vote={vote} />
         </Route>
-        <Route path="/">
+        <Route path='/'>
           <AnecdoteList anecdotes={anecdotes} />
         </Route>
       </Switch>
