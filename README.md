@@ -5,6 +5,7 @@ Exercise submissions for [Full stack open 2020](https://fullstackopen.com/en) co
 ### osa7
 
 * [routed-anecdotes](https://github.com/emakipa/fullstack2020/tree/master/osa7/routed-anecdotes)
+* [country-hook](https://github.com/emakipa/fullstack2020/tree/master/osa7/country-hook)
 
 ### osa6
 
