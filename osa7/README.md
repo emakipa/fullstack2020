@@ -3,4 +3,4 @@
 #### osa7 exercises
 
 * routed-anecdotes    (exercises 7.1 - 7.6)
-* country-hook    (exercises  - )
+* country-hook    (exercises 7.7 - )
