@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useDispatch } from 'react-redux'
-import Blog from './components/Blog'
+import BlogList from './components/BlogList'
 import BlogForm from './components/BlogForm'
 import LoginForm from './components/LoginForm'
 import Togglable from './components/Togglable'
@@ -8,10 +8,10 @@ import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import { setNotification } from './reducers/notificationReducer'
+import { getBlogs, createNewBlog } from './reducers/blogReducer'
 
 const App = () => {
   const [ user, setUser ] = useState(null)
-  const [ blogs, setBlogs ] = useState([])
 
   //access to component's functions outside
   const blogFormRef = useRef()
@@ -19,10 +19,8 @@ const App = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs )
-    )
-  }, [])
+    dispatch(getBlogs())
+  }, [dispatch])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBloglistUser')
@@ -55,39 +53,11 @@ const App = () => {
   const handleCreateNewBlogObject = async (blogObject) => {
 
     try {
-      const addedBlog = await blogService.create(blogObject)
-      setBlogs(blogs.concat(addedBlog))
-      dispatch(setNotification(addedBlog.author !== '' ? `a new blog ${addedBlog.title} by ${addedBlog.author} added` : `a new blog ${addedBlog.title} added`, 5))
+      dispatch(createNewBlog(blogObject))
+      dispatch(setNotification(blogObject.author !== '' ? `a new blog ${blogObject.title} by ${blogObject.author} added` : `a new blog ${blogObject.title} added`, 5))
       blogFormRef.current.toggleVisibility()
     } catch (exception) {
       dispatch(setNotification(exception.response.data.error, 5))
-    }
-  }
-
-  const handleUpdateBlogObject = async (blogObject) => {
-    try {
-      const blogId = blogObject.id
-      const changedBlog = { ...blogObject, likes: blogObject.likes +=1 }
-
-      const updatedBlog = await blogService.update(blogId, changedBlog)
-      dispatch(setNotification(`blog ${updatedBlog.title} updated`, 5))
-    } catch (exception) {
-      dispatch(setNotification(exception.response.data.error, 5))
-    }
-  }
-
-  const handleRemoveBlogObject = async (blogObject) => {
-
-    let choice = window.confirm(`Remove blog ${blogObject.title} by ${blogObject.author}?`)
-
-    if (choice) {
-      try {
-        await blogService.remove(blogObject.id)
-        setBlogs(blogs.filter(b => b.id !== blogObject.id))
-        dispatch(setNotification(`blog ${blogObject.title} removed`, 5))
-      } catch (exception) {
-        dispatch(setNotification(exception.response.data.error, 5))
-      }
     }
   }
 
@@ -122,9 +92,8 @@ const App = () => {
         />
       </Togglable>
 
-      {blogs.sort((a, b) => b.likes - a.likes).map(blog =>
-        <Blog key={blog.id} blog={blog} onClickUpdate={() => handleUpdateBlogObject(blog)} onClickRemove={() => handleRemoveBlogObject(blog)} user={user}/>
-      )}
+      <BlogList user={user} />
+      
     </div>
   )
 }

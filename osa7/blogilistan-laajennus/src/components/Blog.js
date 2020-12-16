@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 const Blog = ({ blog, onClickUpdate, onClickRemove, user }) => {
+
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -33,7 +34,7 @@ const Blog = ({ blog, onClickUpdate, onClickRemove, user }) => {
             {user.name}
           </div>
           <div>
-            {blog.user.name === user.name ? <button id='remove-button' onClick={onClickRemove}>remove</button> : null}
+            <button id='remove-button' onClick={onClickRemove}>remove</button>
           </div>
         </div>
         :
