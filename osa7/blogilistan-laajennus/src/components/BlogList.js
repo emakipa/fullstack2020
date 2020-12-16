@@ -4,7 +4,7 @@ import { setNotification } from '../reducers/notificationReducer'
 import { likeBlog, deleteBlog } from '../reducers/blogReducer'
 import Blog from './Blog'
 
-const BlogList = ({ user }) => {
+const BlogList = () => {
 
   const dispatch = useDispatch()
 
@@ -36,7 +36,7 @@ const BlogList = ({ user }) => {
   return (
     <div>
       {blogs.sort((a, b) => b.likes - a.likes).map(blog =>
-        <Blog key={blog.id} blog={blog} onClickUpdate={() => handleUpdateBlogObject(blog)} onClickRemove={() => handleRemoveBlogObject(blog)} user={user} />
+        <Blog key={blog.id} blog={blog} onClickUpdate={() => handleUpdateBlogObject(blog)} onClickRemove={() => handleRemoveBlogObject(blog)} />
       )}
     </div>  
   )

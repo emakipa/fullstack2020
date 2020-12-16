@@ -1,22 +1,24 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
+import { useField } from '../hooks/index.js'
 
 const BlogForm = ({ createBlog }) => {
-  const [ title, setTitle ] = useState('')
-  const [ author, setAuthor ] = useState('')
-  const [ url, setUrl ] = useState('')
+  const title = useField('text')
+  const author = useField('text')
+  const url = useField('text')
 
   const handleCreateNewBlogObject = (event) => {
     event.preventDefault()
 
     createBlog({
-      title: title === '' ? undefined : title,
-      author: author,
-      url: url === '' ? undefined : url,
+      title: title.input.value,
+      author: author.input.value,
+      url: url.input.value,
     })
-    setTitle('')
-    setAuthor('')
-    setUrl('')
+    
+    title.clear()
+    author.clear()
+    url.clear()
   }
 
   return (
@@ -27,30 +29,21 @@ const BlogForm = ({ createBlog }) => {
           title
           <input
             id='title'
-            type='text'
-            value={title}
-            name='Title'
-            onChange={({ target }) => setTitle(target.value)}
+            { ...title.input }
           />
         </div>
         <div>
           author
           <input
             id='author'
-            type='text'
-            value={author}
-            name='Author'
-            onChange={({ target }) => setAuthor(target.value)}
+            { ...author.input }
           />
         </div>
         <div>
           url
           <input
             id='url'
-            type='text'
-            value={url}
-            name='Url'
-            onChange={({ target }) => setUrl(target.value)}
+            { ...url.input }
           />
         </div>
         <button id='create-button' type="submit">create</button>

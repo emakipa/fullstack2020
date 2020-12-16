@@ -1,4 +1,5 @@
 import blogService from '../services/blogs'
+import { setNotification } from './notificationReducer'
 
 //get all blogs
 export const getBlogs = () => {
@@ -12,13 +13,17 @@ export const getBlogs = () => {
 }
 
 //create new blog
-export const createNewBlog = (blog) => {
+export const createNewBlog = (blogObject) => {
   return async dispatch => {
-    const newBlog = await blogService.create(blog)
-    dispatch({
-      type: 'CREATE_BLOG',
-      data: newBlog
-    })
+    try {
+      const newBlog = await blogService.create(blogObject)
+      dispatch({
+        type: 'CREATE_BLOG',
+        data: newBlog
+      })
+    } catch (error) {
+      dispatch(setNotification(error.response.data.error, 5))
+    }  
   } 
 }
 

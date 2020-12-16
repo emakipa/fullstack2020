@@ -1,17 +1,18 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useEffect, useRef } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import BlogList from './components/BlogList'
 import BlogForm from './components/BlogForm'
 import LoginForm from './components/LoginForm'
 import Togglable from './components/Togglable'
 import Notification from './components/Notification'
 import blogService from './services/blogs'
-import loginService from './services/login'
 import { setNotification } from './reducers/notificationReducer'
 import { getBlogs, createNewBlog } from './reducers/blogReducer'
+import { loginUser, setUser, logoutUser } from './reducers/userReducer'
 
 const App = () => {
-  const [ user, setUser ] = useState(null)
+
+  let user = useSelector(state => state.user)
 
   //access to component's functions outside
   const blogFormRef = useRef()
@@ -25,40 +26,29 @@ const App = () => {
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBloglistUser')
     if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
-      setUser(user)
-      blogService.setToken(user.token)
+      const parsedUser = JSON.parse(loggedUserJSON)
+      dispatch(setUser(parsedUser))
+      blogService.setToken(parsedUser.token)
     }
-  }, [])
+  }, [dispatch])
 
   const handleLogin = async (userObject) => {
-
-    try {
-      const loggedUser = await loginService.login(userObject)
-      window.localStorage.setItem(
-        'loggedBloglistUser', JSON.stringify(loggedUser)
-      )
-      //set token for a logged user
-      blogService.setToken(loggedUser.token)
-      setUser(loggedUser)
-    } catch (exception) {
-      dispatch(setNotification(exception.response.data.error, 5))
-    }
+    dispatch(loginUser(userObject))
   }
 
-  const handleLogout = () => {
-    window.localStorage.removeItem('loggedBloglistUser')
+  const handleLogout = async () => {
+    try {
+      dispatch(logoutUser())
+      blogService.setToken(null)
+    } catch (exception) {
+      dispatch(setNotification(exception.response.data.error, 5))     
+    }  
   }
 
   const handleCreateNewBlogObject = async (blogObject) => {
-
-    try {
-      dispatch(createNewBlog(blogObject))
-      dispatch(setNotification(blogObject.author !== '' ? `a new blog ${blogObject.title} by ${blogObject.author} added` : `a new blog ${blogObject.title} added`, 5))
-      blogFormRef.current.toggleVisibility()
-    } catch (exception) {
-      dispatch(setNotification(exception.response.data.error, 5))
-    }
+    dispatch(createNewBlog(blogObject))
+    dispatch(setNotification(blogObject.author !== '' ? `a new blog ${blogObject.title} by ${blogObject.author} added` : `a new blog ${blogObject.title} added`, 5))
+    blogFormRef.current.toggleVisibility()
   }
 
   if (user === null) {
@@ -92,7 +82,7 @@ const App = () => {
         />
       </Togglable>
 
-      <BlogList user={user} />
+      <BlogList />
       
     </div>
   )

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 
-const Blog = ({ blog, onClickUpdate, onClickRemove, user }) => {
+const Blog = ({ blog, onClickUpdate, onClickRemove }) => {
 
   const blogStyle = {
     paddingTop: 10,
@@ -9,6 +10,8 @@ const Blog = ({ blog, onClickUpdate, onClickRemove, user }) => {
     borderWidth: 1,
     marginBottom: 5
   }
+
+  const user = useSelector(state => state.user)
 
   const [ viewAll, setViewAll ] = useState(false)
 
