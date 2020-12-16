@@ -50,21 +50,21 @@ Exercise submissions for [Full stack open 2020](https://fullstackopen.com/en) co
 
 ### Submissions
 
-Part | Exrcises done
------------- | -------------
-osa0 | 6 / 6
+Part | Exercises done
+------- | -------------
+osa0 |  6 / 6
 osa1 | 14 / 14
 osa2 | 20 / 20
 osa3 | 22 / 22
 osa4 | 22 / 22
 osa5 | 22 / 22
 osa6 | 21 / 21
-osa7 | 9 / 21
-osa8 | x / 26
-osa9 | x / 27
+osa7 | 11 / 21
+osa8 |  x / 26
+osa9 |  x / 27
 osa10 | x / 27
------------- | -------------
-total | 136/228
+------- | -------------
+total | 138/228
 
 
 
