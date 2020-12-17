@@ -13,19 +13,19 @@ export const setNotification = (notification, time) => {
         type: 'NOT_NOTIFY'
       })
     }, time * 1000)
-  } 
+  }
 }
 
 const initialState =  ''
 
 const notificationReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'NOTIFY':
-      return action.notification
-    case 'NOT_NOTIFY':
-      return initialState  
-    default:
-      return state
+  case 'NOTIFY':
+    return action.notification
+  case 'NOT_NOTIFY':
+    return initialState
+  default:
+    return state
   }
 }
 

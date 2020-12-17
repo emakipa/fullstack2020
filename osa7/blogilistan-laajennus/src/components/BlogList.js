@@ -11,12 +11,8 @@ const BlogList = () => {
   const blogs = useSelector(state => state.blog)
 
   const handleUpdateBlogObject = async (blog) => {
-    try {
-      dispatch(likeBlog(blog))
-      dispatch(setNotification(`blog ${blog.title} updated`, 5))
-    } catch (exception) {
-      dispatch(setNotification(exception.response.data.error, 5))
-    }
+    dispatch(likeBlog(blog))
+    dispatch(setNotification(`blog ${blog.title} updated`, 5))
   }
 
   const handleRemoveBlogObject = async (blog) => {
@@ -24,13 +20,13 @@ const BlogList = () => {
     let choice = window.confirm(`Remove blog ${blog.title} by ${blog.author}?`)
 
     if (choice) {
-      try {
-        dispatch(deleteBlog(blog))
-        dispatch(setNotification(`blog ${blog.title} removed`, 5))
-      } catch (exception) {
-        dispatch(setNotification(exception.response.data.error, 5))
-      }
+      dispatch(deleteBlog(blog))
+      dispatch(setNotification(`blog ${blog.title} removed`, 5))
     }
+  }
+
+  if (!blogs) {
+    return null
   }
 
   return (
@@ -38,7 +34,7 @@ const BlogList = () => {
       {blogs.sort((a, b) => b.likes - a.likes).map(blog =>
         <Blog key={blog.id} blog={blog} onClickUpdate={() => handleUpdateBlogObject(blog)} onClickRemove={() => handleRemoveBlogObject(blog)} />
       )}
-    </div>  
+    </div>
   )
 }
 

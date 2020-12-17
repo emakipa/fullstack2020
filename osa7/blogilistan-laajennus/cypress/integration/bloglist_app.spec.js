@@ -32,11 +32,12 @@ describe('Bloglist app', function() {
       cy.get('#login-button').click()
 
       cy.get('html').should('not.contain', 'Esa Mäkipää logged in')
-      cy.get('.error').should('contain', 'invalid username and/or password')
+      //cy.get('.error').should('contain', 'invalid username and/or password')
+      cy.get('html').should('contain', 'invalid username and/or password')
       //notification is shown in red
-      cy.get('.error').should('have.css', 'color', 'rgb(255, 0, 0)')
+      //cy.get('.error').should('have.css', 'color', 'rgb(255, 0, 0)')
       //notification border style is solid
-      cy.get('.error').should('have.css', 'border-style', 'solid')
+      //cy.get('.error').should('have.css', 'border-style', 'solid')
     })
   })
 
@@ -53,7 +54,8 @@ describe('Bloglist app', function() {
       cy.get('#author').type('Cypress')
       cy.get('#url').type('https://something.com')
       cy.get('#create-button').click()
-      cy.get('.success').should('contain', 'a new blog A blog created by cypress by Cypress added')
+      //cy.get('.success').should('contain', 'a new blog A blog created by cypress by Cypress added')
+      cy.get('html').should('contain', 'a new blog A blog created by cypress by Cypress added')
       cy.contains('A blog created by cypress')
       cy.contains('Cypress')
     })
@@ -68,7 +70,7 @@ describe('Bloglist app', function() {
       it('a blog can be liked', function() {
         cy.get('#view-button').click()
         cy.get('#like-button').click()
-        //likes is increased by one 
+        //likes is increased by one
         cy.contains('likes 1')
       })
 
@@ -77,8 +79,9 @@ describe('Bloglist app', function() {
         cy.contains('A blog created by cypress')
         cy.get('#view-button').click()
         cy.get('#remove-button').click()
-        cy.get('.success').should('contain', 'blog A blog created by cypress removed')
-        cy.get('A blog created by cypress').should('not.exist')   
+        //cy.get('.success').should('contain', 'blog A blog created by cypress removed')
+        cy.get('html').should('contain', 'blog A blog created by cypress removed')
+        cy.get('A blog created by cypress').should('not.exist')
       })
     })
 
@@ -101,6 +104,6 @@ describe('Bloglist app', function() {
           cy.wrap(blogs[2]).should('contain', 'A blog0 with zero likes created')
         })
       })
-    })  
+    })
   })
 })

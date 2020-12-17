@@ -5,7 +5,7 @@ export const useField = (type) => {
 
   const onChange = (event) => {
 
-      setValue(event.target.value)
+    setValue(event.target.value)
   }
 
   const clear = () => {
@@ -13,7 +13,7 @@ export const useField = (type) => {
   }
 
   return {
-    input: { 
+    input: {
       type,
       value,
       onChange

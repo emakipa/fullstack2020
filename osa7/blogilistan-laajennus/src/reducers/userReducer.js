@@ -19,7 +19,7 @@ export const loginUser = (userObject) => {
     } catch (error) {
       dispatch(setNotification(error.response.data.error, 5))
     }
-  } 
+  }
 }
 
 //set user
@@ -32,7 +32,7 @@ export const setUser = (loggedUser) => {
       type: 'LOGIN_OR_SET_USER',
       data: loggedUser
     })
-  } 
+  }
 }
 
 //logout user
@@ -42,19 +42,19 @@ export const logoutUser = () => {
     dispatch({
       type: 'LOGOUT_USER'
     })
-  } 
+  }
 }
 
 const initialState = null
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'LOGIN_OR_SET_USER':
-      return action.data
-    case 'LOGOUT_USER':
-      return initialState  
-    default:
-      return state
+  case 'LOGIN_OR_SET_USER':
+    return action.data
+  case 'LOGOUT_USER':
+    return null
+  default:
+    return state
   }
 }
 

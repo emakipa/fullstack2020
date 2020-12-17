@@ -41,8 +41,8 @@ const App = () => {
       dispatch(logoutUser())
       blogService.setToken(null)
     } catch (exception) {
-      dispatch(setNotification(exception.response.data.error, 5))     
-    }  
+      dispatch(setNotification(exception.response.data.error, 5))
+    }
   }
 
   const handleCreateNewBlogObject = async (blogObject) => {
@@ -83,7 +83,7 @@ const App = () => {
       </Togglable>
 
       <BlogList />
-      
+
     </div>
   )
 }

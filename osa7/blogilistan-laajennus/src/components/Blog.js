@@ -19,6 +19,10 @@ const Blog = ({ blog, onClickUpdate, onClickRemove }) => {
     setViewAll(!viewAll)
   }
 
+  if (!blog) {
+    return null
+  }
+
   return (
     <div style={blogStyle} className='blog'>
       {viewAll
@@ -34,10 +38,10 @@ const Blog = ({ blog, onClickUpdate, onClickRemove }) => {
             likes {blog.likes} <button id='like-button' onClick={onClickUpdate}>like</button>
           </div>
           <div>
-            {user.name}
+            added by {blog.user.name || user.name}
           </div>
           <div>
-            <button id='remove-button' onClick={onClickRemove}>remove</button>
+            {blog.user.name === user.name ? <button id='remove-button' onClick={onClickRemove}>remove</button> : null}
           </div>
         </div>
         :

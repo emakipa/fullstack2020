@@ -15,7 +15,7 @@ const BlogForm = ({ createBlog }) => {
       author: author.input.value,
       url: url.input.value,
     })
-    
+
     title.clear()
     author.clear()
     url.clear()

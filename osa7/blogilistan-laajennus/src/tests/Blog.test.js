@@ -22,7 +22,7 @@ test('renders default blog content', () => {
   //component.debug()
 
   expect(component.container).toHaveTextContent(
-    'Blog component testing'
+    'Blog component testing with default content'
   )
   expect(component.container).toHaveTextContent(
     'Esa Mäkipää'
