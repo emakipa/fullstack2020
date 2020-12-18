@@ -5,10 +5,12 @@ import BlogForm from './components/BlogForm'
 import LoginForm from './components/LoginForm'
 import Togglable from './components/Togglable'
 import Notification from './components/Notification'
+import UserList from './components/UserList'
 import blogService from './services/blogs'
 import { setNotification } from './reducers/notificationReducer'
 import { getBlogs, createNewBlog } from './reducers/blogReducer'
 import { loginUser, setUser, logoutUser } from './reducers/userReducer'
+import { getUsers } from './reducers/usersReducer'
 
 const App = () => {
 
@@ -21,6 +23,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(getBlogs())
+    dispatch(getUsers())
   }, [dispatch])
 
   useEffect(() => {
@@ -83,6 +86,10 @@ const App = () => {
       </Togglable>
 
       <BlogList />
+
+      <h2>Users</h2>
+
+      <UserList />
 
     </div>
   )
