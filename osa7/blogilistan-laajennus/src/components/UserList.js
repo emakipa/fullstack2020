@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import User from './User'
+import { Link } from 'react-router-dom'
 
 const UserList = () => {
 
@@ -12,6 +12,7 @@ const UserList = () => {
 
   return (
     <div>
+      <h2>users</h2>
       <table>
         <tbody>
           <tr>
@@ -22,7 +23,10 @@ const UserList = () => {
             </td>
           </tr>
           {users.sort((a, b) => b.blogs.length - a.blogs.length).map(listedUser =>
-            <User key={listedUser.id} listedUser={listedUser} />
+            <tr key={listedUser.id}>
+              <td><Link to={`/users/${listedUser.id}`}>{listedUser.name}</Link></td>
+              <td>{listedUser.blogs.length}</td>
+            </tr>
           )}
         </tbody>
       </table>
