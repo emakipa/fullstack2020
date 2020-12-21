@@ -36,7 +36,7 @@ const Blog = () => {
     if (choice) {
       dispatch(deleteBlog(blog))
       dispatch(setNotification(`blog ${blog.title} removed`, 5))
-      history.push('/blogs')
+      history.push('/')
     }
   }
 
@@ -46,6 +46,7 @@ const Blog = () => {
 
   return (
     <div>
+      <h2>blogs</h2>
       <h3>{blog.title} {blog.author}</h3>
       <p><a href={blog.url}>{blog.url}</a></p>
       likes {blog.likes} <button id='like-button' onClick={handleUpdateBlogObject}>like</button>

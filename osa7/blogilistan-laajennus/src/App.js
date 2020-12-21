@@ -2,7 +2,8 @@ import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   Switch,
-  Route
+  Route,
+  useHistory
 } from 'react-router-dom'
 import BlogList from './components/BlogList'
 import BlogForm from './components/BlogForm'
@@ -12,6 +13,7 @@ import Notification from './components/Notification'
 import UserList from './components/UserList'
 import User from './components/User'
 import Blog from './components/Blog'
+import Menu from './components/Menu'
 import blogService from './services/blogs'
 import { setNotification } from './reducers/notificationReducer'
 import { getBlogs, createNewBlog } from './reducers/blogReducer'
@@ -21,6 +23,8 @@ import { getUsers } from './reducers/usersReducer'
 const App = () => {
 
   let user = useSelector(state => state.user)
+
+  const history = useHistory()
 
   //access to component's functions outside
   const blogFormRef = useRef()
@@ -43,6 +47,7 @@ const App = () => {
 
   const handleLogin = async (userObject) => {
     dispatch(loginUser(userObject))
+    history.push('/')
   }
 
   const handleLogout = async () => {
@@ -79,8 +84,7 @@ const App = () => {
 
   return (
     <div>
-      <h2>blogs</h2>
-
+      <Menu />
       <Notification />
 
       <p>{user.name} logged in <button onClick={() => handleLogout()}>logout</button> </p>
@@ -89,14 +93,6 @@ const App = () => {
         <Route path='/blogs/:id'>
           <Blog />
         </Route>
-        <Route path='/blogs'>
-          <Togglable buttonLabel="create new blog" ref={blogFormRef}>
-            <BlogForm
-              createBlog={handleCreateNewBlogObject}
-            />
-          </Togglable>
-          <BlogList />
-        </Route>
         <Route path='/users/:id'>
           <User />
         </Route>
@@ -104,6 +100,12 @@ const App = () => {
           <UserList />
         </Route>
         <Route path='/'>
+          <h2>blogs</h2>
+          <Togglable buttonLabel="create new blog" ref={blogFormRef}>
+            <BlogForm
+              createBlog={handleCreateNewBlogObject}
+            />
+          </Togglable>
           <BlogList />
         </Route>
       </Switch>
