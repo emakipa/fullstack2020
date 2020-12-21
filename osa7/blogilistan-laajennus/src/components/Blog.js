@@ -1,22 +1,43 @@
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useParams, useHistory } from 'react-router-dom'
+import { setNotification } from '../reducers/notificationReducer'
+import { likeBlog, deleteBlog } from '../reducers/blogReducer'
 
-const Blog = ({ blog, onClickUpdate, onClickRemove }) => {
+const Blog = () => {
 
-  const blogStyle = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    border: 'solid',
-    borderWidth: 1,
-    marginBottom: 5
-  }
+  const dispatch = useDispatch()
 
+  const history = useHistory()
+
+  //get current logged user
   const user = useSelector(state => state.user)
 
-  const [ viewAll, setViewAll ] = useState(false)
+  //get all blogs
+  const blogs = useSelector(state => state.blog)
 
-  const handleViewAll = () => {
-    setViewAll(!viewAll)
+  //get id
+  const id = useParams().id
+
+  //find blog with id
+  const blog = blogs.find(blog => blog.id === id)
+
+  const handleUpdateBlogObject = async (event) => {
+    event.preventDefault()
+    dispatch(likeBlog(blog))
+    dispatch(setNotification(`blog ${blog.title} updated`, 5))
+  }
+
+  const handleRemoveBlogObject = async (event) => {
+    event.preventDefault()
+
+    let choice = window.confirm(`Remove blog ${blog.title} by ${blog.author}?`)
+
+    if (choice) {
+      dispatch(deleteBlog(blog))
+      dispatch(setNotification(`blog ${blog.title} removed`, 5))
+      history.push('/blogs')
+    }
   }
 
   if (!blog) {
@@ -24,31 +45,16 @@ const Blog = ({ blog, onClickUpdate, onClickRemove }) => {
   }
 
   return (
-    <div style={blogStyle} className='blog'>
-      {viewAll
-        ?
-        <div>
-          <div>
-            {blog.title} {blog.author} <button id='hide-button' onClick={handleViewAll}>{viewAll ? 'hide' : 'view'}</button>
-          </div>
-          <div>
-            {blog.url}
-          </div>
-          <div>
-            likes {blog.likes} <button id='like-button' onClick={onClickUpdate}>like</button>
-          </div>
-          <div>
-            added by {blog.user.name || user.name}
-          </div>
-          <div>
-            {blog.user.name === user.name ? <button id='remove-button' onClick={onClickRemove}>remove</button> : null}
-          </div>
-        </div>
-        :
-        <div>
-          {blog.title} {blog.author} <button id='view-button' onClick={handleViewAll}>{viewAll ? 'hide' : 'view'}</button>
-        </div>
-      }
+    <div>
+      <h3>{blog.title} {blog.author}</h3>
+      <p><a href={blog.url}>{blog.url}</a></p>
+      likes {blog.likes} <button id='like-button' onClick={handleUpdateBlogObject}>like</button>
+      <div>
+        added by {blog.user.name || user.name}
+      </div>
+      <div>
+        {blog.user.name === user.name ? <button id='remove-button' onClick={handleRemoveBlogObject}>remove</button> : null}
+      </div>
     </div>
   )
 }

@@ -11,6 +11,7 @@ import Togglable from './components/Togglable'
 import Notification from './components/Notification'
 import UserList from './components/UserList'
 import User from './components/User'
+import Blog from './components/Blog'
 import blogService from './services/blogs'
 import { setNotification } from './reducers/notificationReducer'
 import { getBlogs, createNewBlog } from './reducers/blogReducer'
@@ -85,14 +86,15 @@ const App = () => {
       <p>{user.name} logged in <button onClick={() => handleLogout()}>logout</button> </p>
 
       <Switch>
-        <Route path='/create'>
+        <Route path='/blogs/:id'>
+          <Blog />
+        </Route>
+        <Route path='/blogs'>
           <Togglable buttonLabel="create new blog" ref={blogFormRef}>
             <BlogForm
               createBlog={handleCreateNewBlogObject}
             />
           </Togglable>
-        </Route>
-        <Route path='/blogs'>
           <BlogList />
         </Route>
         <Route path='/users/:id'>
