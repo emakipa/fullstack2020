@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useHistory } from 'react-router-dom'
 import { setNotification } from '../reducers/notificationReducer'
 import { likeBlog, deleteBlog } from '../reducers/blogReducer'
+import Comment from './Comment'
 
 const Blog = () => {
 
@@ -21,6 +22,13 @@ const Blog = () => {
 
   //find blog with id
   const blog = blogs.find(blog => blog.id === id)
+
+  //get blog comments
+  let comments = []
+
+  if (blog) {
+    comments = blog.comments
+  }
 
   const handleUpdateBlogObject = async (event) => {
     event.preventDefault()
@@ -47,7 +55,7 @@ const Blog = () => {
   return (
     <div>
       <h2>blogs</h2>
-      <h3>{blog.title} {blog.author}</h3>
+      <h2>{blog.title} {blog.author}</h2>
       <p><a href={blog.url}>{blog.url}</a></p>
       likes {blog.likes} <button id='like-button' onClick={handleUpdateBlogObject}>like</button>
       <div>
@@ -56,8 +64,10 @@ const Blog = () => {
       <div>
         {blog.user.name === user.name ? <button id='remove-button' onClick={handleRemoveBlogObject}>remove</button> : null}
       </div>
+      <Comment blogId={id} comments={comments} />
     </div>
   )
 }
 
 export default Blog
+
