@@ -22,7 +22,7 @@ export const createNewBlog = (blogObject) => {
         data: newBlog
       })
     } catch (error) {
-      dispatch(setNotification(error.response.data.error, 5))
+      dispatch(setNotification(error.response.data.error, 'error', 5))
     }
   }
 }
@@ -37,7 +37,7 @@ export const likeBlog = (blog) => {
         data: likedBlog
       })
     } catch (error) {
-      dispatch(setNotification(error.response.data.error, 5))
+      dispatch(setNotification(error.response.data.error, 'error', 5))
     }
   }
 }
@@ -52,7 +52,7 @@ export const commentBlog = (blogId, comment) => {
         data: commentedBlog
       })
     } catch (error) {
-      dispatch(setNotification(error.response.data.error, 5))
+      dispatch(setNotification(error.response.data.error, 'error', 5))
     }
   }
 }
@@ -67,12 +67,14 @@ export const deleteBlog = (blog) => {
         data: blog.id
       })
     } catch (error) {
-      dispatch(setNotification(error.response.data.error, 5))
+      dispatch(setNotification(error.response.data.error, 'error', 5))
     }
   }
 }
 
-const blogReducer = (state = [], action) => {
+const initialState = []
+
+const blogReducer = (state = initialState, action) => {
   switch (action.type) {
   case 'GET_BLOGS':
     return action.data

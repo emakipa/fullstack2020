@@ -1,8 +1,14 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { Table } from 'react-bootstrap'
+import { getUsers } from '../reducers/usersReducer'
 
 const UserList = () => {
+
+  const dispatch = useDispatch()
+
+  dispatch(getUsers())
 
   const users = useSelector(state => state.users)
 
@@ -13,10 +19,11 @@ const UserList = () => {
   return (
     <div>
       <h2>users</h2>
-      <table>
+      <Table striped>
         <tbody>
           <tr>
             <td>
+              <b>user</b>
             </td>
             <td>
               <b>blogs created</b>
@@ -24,12 +31,16 @@ const UserList = () => {
           </tr>
           {users.sort((a, b) => b.blogs.length - a.blogs.length).map(listedUser =>
             <tr key={listedUser.id}>
-              <td><Link to={`/users/${listedUser.id}`}>{listedUser.name}</Link></td>
-              <td>{listedUser.blogs.length}</td>
+              <td>
+                <Link to={`/users/${listedUser.id}`}>{listedUser.name}</Link>
+              </td>
+              <td>
+                {listedUser.blogs.length}
+              </td>
             </tr>
           )}
         </tbody>
-      </table>
+      </Table>
     </div>
   )
 }

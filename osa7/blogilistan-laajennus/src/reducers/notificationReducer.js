@@ -1,12 +1,15 @@
 var timeOutID
 
 //set notification
-export const setNotification = (notification, time) => {
+export const setNotification = (notification, notificationType, time) => {
   window.clearTimeout(timeOutID)
   return async dispatch => {
     dispatch({
       type: 'NOTIFY',
-      notification: notification
+      data: {
+        notification,
+        notificationType
+      }
     })
     timeOutID = window.setTimeout(() => {
       dispatch({
@@ -16,12 +19,12 @@ export const setNotification = (notification, time) => {
   }
 }
 
-const initialState =  ''
+const initialState = null
 
 const notificationReducer = (state = initialState, action) => {
   switch (action.type) {
   case 'NOTIFY':
-    return action.notification
+    return action.data
   case 'NOT_NOTIFY':
     return initialState
   default:

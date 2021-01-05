@@ -47,7 +47,7 @@ const App = () => {
 
   const handleLogin = async (userObject) => {
     dispatch(loginUser(userObject))
-    history.push('/')
+    history.push('/blogs')
   }
 
   const handleLogout = async () => {
@@ -55,19 +55,19 @@ const App = () => {
       dispatch(logoutUser())
       blogService.setToken(null)
     } catch (exception) {
-      dispatch(setNotification(exception.response.data.error, 5))
+      dispatch(setNotification(exception.response.data.error, 'error', 5))
     }
   }
 
   const handleCreateNewBlogObject = async (blogObject) => {
     dispatch(createNewBlog(blogObject))
-    dispatch(setNotification(blogObject.author !== '' ? `a new blog ${blogObject.title} by ${blogObject.author} added` : `a new blog ${blogObject.title} added`, 5))
+    dispatch(setNotification(blogObject.author !== '' ? `a new blog ${blogObject.title} by ${blogObject.author} added` : `a new blog ${blogObject.title} added`, 'success', 5))
     blogFormRef.current.toggleVisibility()
   }
 
   if (user === null) {
     return (
-      <div>
+      <div className='container'>
         <h2>log in to application</h2>
 
         <Notification />
@@ -83,24 +83,15 @@ const App = () => {
   }
 
   return (
-    <div>
-      <Menu />
+    <div className='container'>
+      <Menu user={user} logout={handleLogout} />
       <Notification />
-
-      <p>{user.name} logged in <button onClick={() => handleLogout()}>logout</button> </p>
-
+      <br />
       <Switch>
         <Route path='/blogs/:id'>
           <Blog />
         </Route>
-        <Route path='/users/:id'>
-          <User />
-        </Route>
-        <Route path='/users'>
-          <UserList />
-        </Route>
-        <Route path='/'>
-          <h2>blogs</h2>
+        <Route path='/blogs'>
           <Togglable buttonLabel="create new blog" ref={blogFormRef}>
             <BlogForm
               createBlog={handleCreateNewBlogObject}
@@ -108,8 +99,13 @@ const App = () => {
           </Togglable>
           <BlogList />
         </Route>
+        <Route path='/users/:id'>
+          <User />
+        </Route>
+        <Route path='/users'>
+          <UserList />
+        </Route>
       </Switch>
-
     </div>
   )
 }

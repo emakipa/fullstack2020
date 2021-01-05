@@ -4,6 +4,7 @@ import { useParams, useHistory } from 'react-router-dom'
 import { setNotification } from '../reducers/notificationReducer'
 import { likeBlog, deleteBlog } from '../reducers/blogReducer'
 import Comment from './Comment'
+import { Button } from 'react-bootstrap'
 
 const Blog = () => {
 
@@ -14,18 +15,30 @@ const Blog = () => {
   //get current logged user
   const user = useSelector(state => state.user)
 
-  //get all blogs
-  const blogs = useSelector(state => state.blog)
+  //get all users
+  const users = useSelector(state => state.users)
 
   //get id
   const id = useParams().id
 
   //find blog with id
-  const blog = blogs.find(blog => blog.id === id)
+  const blog = useSelector(state => state.blog).find(blog => blog.id === id)
 
-  //get blog comments
+  if (!blog) {
+    return null
+  }
+
+  //get blog user
+  let blogUser = null
+
+  if (blog.user.id) {
+    blogUser = users.find(user => user.id === String(blog.user.id))
+  } else {
+    blogUser = users.find(user => user.id === String(blog.user))
+  }
+
+  //get blog comments and blog user
   let comments = []
-
   if (blog) {
     comments = blog.comments
   }
@@ -33,7 +46,7 @@ const Blog = () => {
   const handleUpdateBlogObject = async (event) => {
     event.preventDefault()
     dispatch(likeBlog(blog))
-    dispatch(setNotification(`blog ${blog.title} updated`, 5))
+    dispatch(setNotification(`blog ${blog.title} updated`, 'success', 5))
   }
 
   const handleRemoveBlogObject = async (event) => {
@@ -43,13 +56,9 @@ const Blog = () => {
 
     if (choice) {
       dispatch(deleteBlog(blog))
-      dispatch(setNotification(`blog ${blog.title} removed`, 5))
-      history.push('/')
+      dispatch(setNotification(`blog ${blog.title} removed`, 'success', 5))
+      history.push('/blogs')
     }
-  }
-
-  if (!blog) {
-    return null
   }
 
   return (
@@ -57,17 +66,18 @@ const Blog = () => {
       <h2>blogs</h2>
       <h2>{blog.title} {blog.author}</h2>
       <p><a href={blog.url}>{blog.url}</a></p>
-      likes {blog.likes} <button id='like-button' onClick={handleUpdateBlogObject}>like</button>
+      {blog.likes} likes <Button id='like-button' variant='btn btn-outline-primary' type='submit' onClick={handleUpdateBlogObject}>like</Button>
       <div>
-        added by {blog.user.name || user.name}
+        added by {blogUser.name}
       </div>
+
       <div>
-        {blog.user.name === user.name ? <button id='remove-button' onClick={handleRemoveBlogObject}>remove</button> : null}
+        {blogUser.name === user.name ? <Button id='remove-button' variant='btn btn-outline-dark' type='button' onClick={handleRemoveBlogObject}>remove</Button> : null}
       </div>
+      <br />
       <Comment blogId={id} comments={comments} />
     </div>
   )
 }
 
 export default Blog
-

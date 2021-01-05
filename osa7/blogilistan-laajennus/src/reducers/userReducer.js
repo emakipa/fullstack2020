@@ -17,7 +17,7 @@ export const loginUser = (userObject) => {
         data: loggedUser
       })
     } catch (error) {
-      dispatch(setNotification(error.response.data.error, 5))
+      dispatch(setNotification(error.response.data.error, 'error', 5))
     }
   }
 }

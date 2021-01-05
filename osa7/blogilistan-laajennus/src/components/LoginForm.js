@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { useField } from '../hooks/index.js'
+import { Form, Button } from 'react-bootstrap'
 
 const LoginForm = ({ loginUser }) => {
   const username = useField('text')
@@ -20,23 +21,29 @@ const LoginForm = ({ loginUser }) => {
 
   return (
     <div>
-      <form onSubmit={handleLogin}>
-        <div>
-          username
-          <input
+      <Form onSubmit={handleLogin}>
+        <Form.Group>
+          <Form.Label>username</Form.Label>
+          <Form.Control
             id='username'
             { ...username.input }
           />
-        </div>
-        <div>
-          password
-          <input
+          <Form.Label>password</Form.Label>
+          <Form.Control
             id='password'
             { ...password.input }
           />
-        </div>
-        <button id='login-button' type="submit">login</button>
-      </form>
+          <br />
+          {(username.input.value && password.input.value) ?
+            <Button variant="primary" type="submit">
+              login
+            </Button> :
+            <Button variant="primary" type="submit" disabled>
+              login
+            </Button>
+          }
+        </Form.Group>
+      </Form>
     </div>
   )
 }

@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { useField } from '../hooks/index.js'
+import { Form, Button } from 'react-bootstrap'
 
 const BlogForm = ({ createBlog }) => {
   const title = useField('text')
@@ -24,30 +25,29 @@ const BlogForm = ({ createBlog }) => {
   return (
     <div>
       <h2>create new</h2>
-      <form onSubmit={handleCreateNewBlogObject}>
-        <div>
-          title
-          <input
+      <Form onSubmit={handleCreateNewBlogObject}>
+        <Form.Group>
+          <Form.Label>title</Form.Label>
+          <Form.Control
             id='title'
             { ...title.input }
           />
-        </div>
-        <div>
-          author
-          <input
+          <Form.Label>author</Form.Label>
+          <Form.Control
             id='author'
             { ...author.input }
           />
-        </div>
-        <div>
-          url
-          <input
+          <Form.Label>url</Form.Label>
+          <Form.Control
             id='url'
             { ...url.input }
           />
-        </div>
-        <button id='create-button' type="submit">create</button>
-      </form>
+          <br />
+          <Button id='create-button' variant="primary" type="submit">
+            create
+          </Button>
+        </Form.Group>
+      </Form>
     </div>
   )
 }
