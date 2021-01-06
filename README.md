@@ -2,6 +2,10 @@
 
 Exercise submissions for [Full stack open 2020](https://fullstackopen.com/en) course by University of Helsinki.
 
+### osa8
+
+* [kirjaston-backend](https://github.com/emakipa/fullstack2020/tree/master/osa8/kirjaston-backend)
+
 ### osa7
 
 * [routed-anecdotes](https://github.com/emakipa/fullstack2020/tree/master/osa7/routed-anecdotes)
