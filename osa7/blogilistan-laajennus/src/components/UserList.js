@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Table } from 'react-bootstrap'
@@ -8,7 +8,9 @@ const UserList = () => {
 
   const dispatch = useDispatch()
 
-  dispatch(getUsers())
+  useEffect(() => {
+    dispatch(getUsers())
+  }, [dispatch])
 
   const users = useSelector(state => state.users)
 
