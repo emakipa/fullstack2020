@@ -1,0 +1,20 @@
+{
+  "name": "kirjastonbackend",
+  "version": "0.0.1",
+  "description": "library application backend",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emakipa/fullstack2020.git"
+  },
+  "author": "Esa Mäkipää",
+  "license": "MIT",
+  "dependencies": {
+    "apollo-server": "^2.19.1",
+    "graphql": "^15.4.0"
+  }
+}
