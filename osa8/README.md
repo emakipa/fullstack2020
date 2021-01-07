@@ -2,4 +2,4 @@
 
 #### osa8 exercises
 
-* kirjaston-backend    (exercise 8.1 - 8.6)
+* kirjaston-backend    (exercise 8.1 - 8.7)
