@@ -1,26 +1,23 @@
 const { UserInputError } = require('apollo-server')
 const { v1: uuid } = require('uuid')
 var { authors, books } = require('./data')
+const Book = require('./models/book')
+const Author = require('./models/author')
 
 const resolvers = {
   Query: {
     bookCount: () => books.length,
     authorCount: () => authors.length,
-    allBooks: (root, args) => {
-      if (args.author && args.genre) {
-        return books
-          .filter(book => book.author === args.author)
-          .filter(book => book.genres.includes(args.genre))
-      }
-      if (args.author) {
-        return books.filter(book => book.author === args.author)
-      }
-      if (args.genre) {
-        return books.filter(book => book.genres.includes(args.genre))
-      } 
+    allBooks: async (root, args) => {
+      let books = await Book.find({}).populate('author')
+      
       return books 
     },
-    allAuthors: () => authors
+    allAuthors: async (root, args) => {
+      let authors = await Author.find({})
+
+      return authors
+    }   
   },
   Author: {
     bookCount: (root, args) => {
@@ -28,18 +25,45 @@ const resolvers = {
     }
   },
   Mutation: {
-    addBook: (root, args) => {
-      if (books.find(book => book.title === args.title)) {
+    addBook: async (root, args) => {
+
+      let book = await Book.findOne({ title: args.title })
+      if (book) {
         throw new UserInputError('Book already exists', {
           invalidArgs: args.title,
         })
       }
-      const book = { ...args, id: uuid() }
-      books = books.concat(book)
+
+      let author = await Author.findOne({ name: args.author })
       //if author does not exist in authors, author is added
-      if (!authors.find(author => author.name === args.author)) {
-        authors = authors.concat({ name: args.author, born: null, id: uuid() })
-      }  
+      if (!author) {
+        try {
+          author = new Author({ name: args.author, born: null });
+          await author.save()
+        } catch (error) {
+          throw new UserInputError('Error in creating new author', {
+            invalidArgs: args.author,
+          })
+        }
+      } 
+
+      book = new Book(
+        { 
+          title: args.title,
+          author: author._id,
+          published: args.published,
+          genres: args.genres 
+        }
+      )
+
+      try {
+        await book.save()
+      } catch (error) {
+        throw new UserInputError('Error in creating new book', {
+          invalidArgs: args,
+        })
+      }
+
       return book
     },
     editAuthor: (root, args) => {
