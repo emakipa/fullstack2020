@@ -3,25 +3,37 @@ const { v1: uuid } = require('uuid')
 var { authors, books } = require('./data')
 const Book = require('./models/book')
 const Author = require('./models/author')
+const { findByIdAndUpdate } = require('./models/book')
 
 const resolvers = {
   Query: {
-    bookCount: () => books.length,
-    authorCount: () => authors.length,
+    bookCount: () => Book.collection.countDocuments(),
+    authorCount: () => Author.collection.countDocuments(),
     allBooks: async (root, args) => {
-      let books = await Book.find({}).populate('author')
-      
-      return books 
+      if (args.author && args.genre) {
+        const author = await Author.findOne({ name: args.author })
+        return Book
+          .find({ author: { $in: [ author._id ] } })
+          .find({ genres: { $in: [ args.genre ] } })
+      }
+      if (args.author) {
+        const author = await Author.findOne({ name: args.author })
+        return Book.find({ author: { $in: [ author._id ] } })
+      }
+      if (args.genre) {
+        return Book.find({ genres: { $in: [ args.genre ] } })
+      }
+
+      return await Book.find({}) 
     },
     allAuthors: async (root, args) => {
       let authors = await Author.find({})
-
       return authors
     }   
   },
   Author: {
     bookCount: (root, args) => {
-        return books.filter(book => book.author === root.name).length
+      return Book.find( { author: { $in: [ root.id ] } } ).countDocuments()
     }
   },
   Mutation: {
@@ -66,16 +78,36 @@ const resolvers = {
 
       return book
     },
-    editAuthor: (root, args) => {
-      const author = authors.find(a => a.name === args.name)
+    editAuthor: async (root, args) => {
+      try {
+        const author = await Author.findOne({ name: args.name })
+        if (!author) {
+          return null
+        }
+        const updateAuthor = {
+          name: author.name,
+          born: args.setBornTo,
+          _id: author.id
+        }
+        const updatedAuthor = await Author.findByIdAndUpdate(updateAuthor._id, updateAuthor, {new: true}) 
+        return updatedAuthor
+      } catch (error) {
+        throw new UserInputError('Error in updating author', {
+          invalidArgs: args
+      })
+      }
+    }
+  }  
+}
+
+module.exports = { resolvers }
+
+/*
+const author = authors.find(a => a.name === args.name)
       if (!author) {
         return null
       }
       const updatedAuthor = { ...args, born: args.setBornTo }
       authors = authors.map(a => a.name === args.name ? updatedAuthor : a)
       return updatedAuthor
-    }
-  }  
-}
-
-module.exports = { resolvers }
+*/
