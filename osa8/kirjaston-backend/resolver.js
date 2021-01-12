@@ -1,8 +1,11 @@
-const { UserInputError } = require('apollo-server')
+const { UserInputError, AuthenticationError } = require('apollo-server')
 const { v1: uuid } = require('uuid')
-var { authors, books } = require('./data')
+const jwt = require('jsonwebtoken')
 const Book = require('./models/book')
 const Author = require('./models/author')
+const User = require('./models/user')
+
+const JWT_SECRET = process.env.SECRET
 
 const resolvers = {
   Query: {
@@ -28,6 +31,9 @@ const resolvers = {
     allAuthors: async (root, args) => {
       let authors = await Author.find({})
       return authors
+    },
+    me: (root, args, { currentUser }) => {
+      return currentUser
     }   
   },
   Author: {
@@ -37,7 +43,6 @@ const resolvers = {
   },
   Book: {
     author: async (root, args) => {
-      console.log('Book author: ', root)
       const author = await Author.findOne({ _id: root.author })
       return { 
         name: author.name,
@@ -46,7 +51,11 @@ const resolvers = {
     }
   },
   Mutation: {
-    addBook: async (root, args) => {
+    addBook: async (root, args, { currentUser }) => {
+
+      if (!currentUser) {
+        throw new AuthenticationError('log in to add a book')
+      }
 
       let book = await Book.findOne({ title: args.title })
       if (book) {
@@ -99,7 +108,12 @@ const resolvers = {
 
       return book
     },
-    editAuthor: async (root, args) => {
+    editAuthor: async (root, args, { currentUser }) => {
+
+      if (!currentUser) {
+        throw new AuthenticationError('log in to update author data')
+      }
+
       try {
         const author = await Author.findOne({ name: args.name })
         if (!author) {
@@ -117,7 +131,31 @@ const resolvers = {
           invalidArgs: args
       })
       }
-    }
+    },
+    createUser: (root, args) => {
+      const user = new User({ username: args.username, favoriteGenre: args.favoriteGenre })
+  
+      return user.save()
+        .catch(error => {
+          throw new UserInputError(error.message, {
+            invalidArgs: args,
+          })
+        })
+    },
+    login: async (root, args) => {
+      const user = await User.findOne({ username: args.username })
+  
+      if ( !user || args.password !== 'secret' ) {
+        throw new UserInputError("wrong credentials")
+      }
+  
+      const userForToken = {
+        username: user.username,
+        id: user._id,
+      }
+  
+      return { value: jwt.sign(userForToken, JWT_SECRET) }
+    }  
   }  
 }
 
