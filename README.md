@@ -5,6 +5,7 @@ Exercise submissions for [Full stack open 2020](https://fullstackopen.com/en) co
 ### osa8
 
 * [kirjaston-backend](https://github.com/emakipa/fullstack2020/tree/master/osa8/kirjaston-backend)
+* [kirjaston-frontend](https://github.com/emakipa/fullstack2020/tree/master/osa8/kirjaston-frontend)
 
 ### osa7
 
