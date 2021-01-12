@@ -1,4 +1,3 @@
-  
 import React, { useState, useEffect } from 'react'
 import { useQuery , useMutation } from '@apollo/client'
 import {
@@ -89,6 +88,7 @@ const Authors = (props) => {
           <div>
             born
             <input
+              type='number'
               value={born}
               onChange={({ target }) => setBorn(parseInt(target.value))}
             />

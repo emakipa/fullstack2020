@@ -3,25 +3,24 @@ const { v1: uuid } = require('uuid')
 var { authors, books } = require('./data')
 const Book = require('./models/book')
 const Author = require('./models/author')
-const { findByIdAndUpdate } = require('./models/book')
 
 const resolvers = {
   Query: {
-    bookCount: () => Book.collection.countDocuments(),
-    authorCount: () => Author.collection.countDocuments(),
+    bookCount: async () => await Book.collection.countDocuments(),
+    authorCount: async () => await Author.collection.countDocuments(),
     allBooks: async (root, args) => {
       if (args.author && args.genre) {
         const author = await Author.findOne({ name: args.author })
-        return Book
+        return await Book
           .find({ author: { $in: [ author._id ] } })
           .find({ genres: { $in: [ args.genre ] } })
       }
       if (args.author) {
         const author = await Author.findOne({ name: args.author })
-        return Book.find({ author: { $in: [ author._id ] } })
+        return await Book.find({ author: { $in: [ author._id ] } })
       }
       if (args.genre) {
-        return Book.find({ genres: { $in: [ args.genre ] } })
+        return await Book.find({ genres: { $in: [ args.genre ] } })
       }
 
       return await Book.find({}) 
@@ -32,8 +31,18 @@ const resolvers = {
     }   
   },
   Author: {
-    bookCount: (root, args) => {
-      return Book.find( { author: { $in: [ root.id ] } } ).countDocuments()
+    bookCount: async (root, args) => {
+      return await Book.find({ author: { $in: [ root.id ] } }).countDocuments()
+    }
+  },
+  Book: {
+    author: async (root, args) => {
+      console.log('Book author: ', root)
+      const author = await Author.findOne({ _id: root.author })
+      return { 
+        name: author.name,
+        born: author.born
+      }
     }
   },
   Mutation: {
@@ -53,9 +62,15 @@ const resolvers = {
           author = new Author({ name: args.author, born: null });
           await author.save()
         } catch (error) {
-          throw new UserInputError('Error in creating new author', {
-            invalidArgs: args.author,
-          })
+          if (error.name === 'ValidationError') {
+            throw new UserInputError('author name min length is 4', {
+              invalidArgs: args.author,
+            })
+          } else {
+            throw new UserInputError(error.message, {
+              invalidArgs: args.author,
+            })
+          } 
         }
       } 
 
@@ -71,9 +86,15 @@ const resolvers = {
       try {
         await book.save()
       } catch (error) {
-        throw new UserInputError('Error in creating new book', {
-          invalidArgs: args,
-        })
+        if (error.name === 'ValidationError') {
+          throw new UserInputError('book title min length is 2', {
+            invalidArgs: args,
+          })
+        } else {
+          throw new UserInputError(error.message, {
+            invalidArgs: args.author,
+          })
+        }
       }
 
       return book
@@ -92,7 +113,7 @@ const resolvers = {
         const updatedAuthor = await Author.findByIdAndUpdate(updateAuthor._id, updateAuthor, {new: true}) 
         return updatedAuthor
       } catch (error) {
-        throw new UserInputError('Error in updating author', {
+        throw new UserInputError(error.message, {
           invalidArgs: args
       })
       }
@@ -101,13 +122,3 @@ const resolvers = {
 }
 
 module.exports = { resolvers }
-
-/*
-const author = authors.find(a => a.name === args.name)
-      if (!author) {
-        return null
-      }
-      const updatedAuthor = { ...args, born: args.setBornTo }
-      authors = authors.map(a => a.name === args.name ? updatedAuthor : a)
-      return updatedAuthor
-*/
