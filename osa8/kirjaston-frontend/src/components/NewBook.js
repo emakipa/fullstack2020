@@ -14,13 +14,30 @@ const NewBook = (props) => {
   const [genres, setGenres] = useState([])
 
   const [ createBook ] = useMutation(CREATE_BOOK, {
-    refetchQueries: [ { query: ALL_BOOKS }, { query: ALL_AUTHORS } ],
     onError: (error) => {
       if (error.graphQLErrors.length > 0) {
         props.setError(error.graphQLErrors[0].message)
       } else {
         props.setError('invalid or missing data')
       }
+    },
+    update: (store, response) => {
+      const booksInStore = store.readQuery({ query: ALL_BOOKS })
+      store.writeQuery({
+        query: ALL_BOOKS,
+        data: {
+          ...booksInStore,
+          allBooks: [ ...booksInStore.allBooks, response.data.addBook ]
+        }
+      })
+      const authorsInStore = store.readQuery({ query: ALL_AUTHORS })
+      store.writeQuery({
+        query: ALL_AUTHORS,
+        data: {
+          ...authorsInStore,
+          allAuthors: [ ...authorsInStore.allAuthors, response.data.addBook.author ]
+        }
+      })
     }
   })
 

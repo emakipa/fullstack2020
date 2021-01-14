@@ -11,13 +11,22 @@ const Authors = (props) => {
 
   const authors = useQuery(ALL_AUTHORS)
   const [ updateAuthor, result ] = useMutation(UPDATE_AUTHOR, {
-    refetchQueries: [ { query: ALL_AUTHORS } ],
     onError: (error) => {
       if (error.graphQLErrors.length > 0) {
         props.setError(error.graphQLErrors[0].message)
       } else {
         props.setError('invalid or missing data')
       }
+    },
+    update: (store, response) => {
+      const authorsInStore = store.readQuery({ query: ALL_AUTHORS })
+      store.writeQuery({
+        query: ALL_AUTHORS,
+        data: {
+          ...authorsInStore,
+          allAuthors: [ ...authorsInStore.allAuthors ]
+        }
+      })
     }
   })
 
