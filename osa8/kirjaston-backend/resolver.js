@@ -132,15 +132,31 @@ const resolvers = {
       })
       }
     },
-    createUser: (root, args) => {
-      const user = new User({ username: args.username, favoriteGenre: args.favoriteGenre })
-  
-      return user.save()
-        .catch(error => {
+    createUser: async (root, args) => {
+      let user = await User.findOne({ username: args.username })
+      if (user) {
+        throw new UserInputError('username must be unique', {
+          invalidArgs: args.username,
+        })
+      }
+
+      user = new User({ username: args.username, favoriteGenre: args.favoriteGenre })
+
+      try {
+        await user.save()
+      } catch (error) {
+        if (error.name === 'ValidationError') {
+          throw new UserInputError('username min length is 3 or data missing', {
+            invalidArgs: args,
+          })
+        } else {
           throw new UserInputError(error.message, {
             invalidArgs: args,
           })
-        })
+        } 
+      }
+
+      return user  
     },
     login: async (root, args) => {
       const user = await User.findOne({ username: args.username })
