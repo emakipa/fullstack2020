@@ -1,43 +1,63 @@
-import React, { useState } from 'react'
-import { useQuery } from '@apollo/client'
+import React, { useState, useEffect } from 'react'
+import { useQuery, useLazyQuery } from '@apollo/client'
 import { ALL_BOOKS } from '../queries'
 
 const Books = (props) => {
-  const [ genreSelector, setGenreSelector ] = useState(null)
-  const allGenres = []
+  const [ selectedGenre, setSelectedGenre ] = useState(null)
+  // books according to selected genre
+  const [books, setBooks] = useState(null)
+  // all genres
+  const genres = [] 
 
-  const books = useQuery(ALL_BOOKS)
+  // query for all books
+  const booksInLibrary = useQuery(ALL_BOOKS)
+
+  // query for books in selected genre
+  const [getBooksByGenre, result] = useLazyQuery(ALL_BOOKS, { variables: { genre: selectedGenre },
+    fetchPolicy: 'cache-and-network',
+    onError: (error) => {
+      props.setError(error.graphQLErrors[0].message)
+    }
+  })
+
+  useEffect(() => {
+    if (result.data) {
+      setBooks(result.data.allBooks)
+    }
+  }, [result.data])
+  
+  useEffect(() => {
+    if (booksInLibrary.data) {
+      setBooks(booksInLibrary.data.allBooks)
+    }
+  }, [booksInLibrary.data])
 
   if (!props.show) {
     return null
   }
 
-  if ( books.loading ) {
+  if ( result.loading ) {
     return <div>loading...</div>
   }
 
-  books.data.allBooks.forEach(book => {
+  // all genres in books collection, creating genre list for selection 
+  booksInLibrary.data.allBooks.forEach(book => {
     book.genres.forEach(genre =>
-      allGenres.includes(genre) ? null : allGenres.push(genre)
+      genres.includes(genre) ? null : genres.push(genre)
     )
   })
-
-  let selectedBooks = []
-  if (genreSelector) {
-    selectedBooks = books.data.allBooks.filter(book => book.genres.includes(genreSelector))
-  } else {
-    selectedBooks = books.data.allBooks
-  }
   
   const handleGenreSelect = async (event) => {
     event.preventDefault()
     
     if (event.target.value === 'all genres') {
-      setGenreSelector(null)
+      setSelectedGenre(null)
       return
     }
 
-    setGenreSelector(event.target.value)
+    setSelectedGenre(event.target.value)
+
+    getBooksByGenre()
   }
 
 
@@ -45,10 +65,10 @@ const Books = (props) => {
     <div>
       <h2>books</h2>
 
-      {genreSelector 
+      {selectedGenre 
         ?
         <div>
-          in genre <b>{genreSelector}</b>
+          in genre <b>{selectedGenre}</b>
         </div>
         :
         <div>
@@ -66,7 +86,7 @@ const Books = (props) => {
               published
             </th>
           </tr>
-          {selectedBooks.map(b =>
+          {books.map(b =>
             <tr key={b.title}>
               <td>{b.title}</td>
               <td>{b.author.name}</td>
@@ -81,7 +101,7 @@ const Books = (props) => {
         <button value={'all genres'} onClick={handleGenreSelect}>
             {'all genres'}
         </button>
-        {allGenres.sort().map(g => (
+        {genres.sort().map(g => (
           <button key={g} value={g} onClick={handleGenreSelect}>
             {g}
           </button>   

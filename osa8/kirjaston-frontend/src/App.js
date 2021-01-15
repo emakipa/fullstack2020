@@ -30,6 +30,7 @@ const App = () => {
   const client = useApolloClient()
 
   const [getUser, result] = useLazyQuery(CURRENT_USER, {
+    pollInterval: 500,
     onError: (error) => {
       notify(error.graphQLErrors[0].message)
     }
