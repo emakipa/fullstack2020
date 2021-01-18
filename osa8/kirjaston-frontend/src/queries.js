@@ -101,3 +101,13 @@ export const CREATE_USER = gql`
   }
   ${USER_DETAILS}
 `
+
+export const BOOK_ADDED = gql`
+  subscription {
+    bookAdded {
+      ...BookDetails
+    }
+  }
+  
+${BOOK_DETAILS}
+`

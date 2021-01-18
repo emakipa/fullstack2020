@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useQuery , useMutation } from '@apollo/client'
+import { useQuery, useMutation } from '@apollo/client'
 import {
   ALL_AUTHORS,
   UPDATE_AUTHOR
@@ -23,7 +23,7 @@ const Authors = (props) => {
 
   const submit = async (event) => {
     event.preventDefault()
-    
+
     updateAuthor({  variables: { name, born } })
 
     setName('')
@@ -80,10 +80,10 @@ const Authors = (props) => {
               </option>
               {authorsByName.map(a => (
                 <option key={a} value={a}>
-                    {a}
-                </option>   
+                  {a}
+                </option>
               ))}
-            </select> 
+            </select>
           </div>
           <div>
             born

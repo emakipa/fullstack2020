@@ -7,7 +7,7 @@ const Books = (props) => {
   // books according to selected genre
   const [books, setBooks] = useState(null)
   // all genres
-  const genres = [] 
+  const genres = []
 
   // query for all books
   const booksInLibrary = useQuery(ALL_BOOKS)
@@ -25,7 +25,7 @@ const Books = (props) => {
       setBooks(result.data.allBooks)
     }
   }, [result.data])
-  
+
   useEffect(() => {
     if (booksInLibrary.data) {
       setBooks(booksInLibrary.data.allBooks)
@@ -40,16 +40,16 @@ const Books = (props) => {
     return <div>loading...</div>
   }
 
-  // all genres in books collection, creating genre list for selection 
+  // all genres in books collection, creating genre list for selection
   booksInLibrary.data.allBooks.forEach(book => {
     book.genres.forEach(genre =>
       genres.includes(genre) ? null : genres.push(genre)
     )
   })
-  
+
   const handleGenreSelect = async (event) => {
     event.preventDefault()
-    
+
     if (event.target.value === 'all genres') {
       setSelectedGenre(null)
       return
@@ -65,7 +65,7 @@ const Books = (props) => {
     <div>
       <h2>books</h2>
 
-      {selectedGenre 
+      {selectedGenre
         ?
         <div>
           in genre <b>{selectedGenre}</b>
@@ -99,12 +99,12 @@ const Books = (props) => {
       <h4>select genre</h4>
       <div>
         <button value={'all genres'} onClick={handleGenreSelect}>
-            {'all genres'}
+          {'all genres'}
         </button>
         {genres.sort().map(g => (
           <button key={g} value={g} onClick={handleGenreSelect}>
             {g}
-          </button>   
+          </button>
         ))}
       </div>
     </div>

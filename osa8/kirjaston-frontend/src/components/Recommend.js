@@ -6,7 +6,7 @@ const Recommend = (props) => {
   const [books, setBooks] = useState(null)
 
   const genre = props.user.favoriteGenre
-  
+
   const booksByFavoriteGenre = useQuery(ALL_BOOKS, { variables: { genre: genre },
     fetchPolicy: 'cache-and-network',
     onError: (error) => {
@@ -35,7 +35,7 @@ const Recommend = (props) => {
       <div>
           books in your favorite genre <b>{genre}</b>
       </div>
-      
+
       <table>
         <tbody>
           <tr>

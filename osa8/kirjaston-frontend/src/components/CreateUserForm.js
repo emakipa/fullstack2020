@@ -16,7 +16,7 @@ const CreateUserForm = ({ show, setError, setPage }) => {
     event.preventDefault()
 
     createUser({ variables: { username, favoriteGenre } })
-    
+
     setUsername('')
     setFavoriteGenre('')
     setPage('authors')

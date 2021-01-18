@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { useMutation } from '@apollo/client'
 import {
   ALL_AUTHORS,
-  ALL_BOOKS,
   CREATE_BOOK
 } from '../queries'
 
@@ -23,14 +22,7 @@ const NewBook = (props) => {
       }
     },
     update: (store, response) => {
-      const booksInStore = store.readQuery({ query: ALL_BOOKS })
-      store.writeQuery({
-        query: ALL_BOOKS,
-        data: {
-          ...booksInStore,
-          allBooks: [ ...booksInStore.allBooks, response.data.addBook ]
-        }
-      })
+      props.updateCacheWith(response.data.addBook)
     }
   })
 

@@ -2,24 +2,17 @@
 import React, { useState, useEffect } from 'react'
 import Authors from './components/Authors'
 import Books from './components/Books'
-import NewBook from './components/NewBook'
-import Recommend from './components/Recommend'
 import CreateUserForm from './components/CreateUserForm'
 import LoginForm from './components/LoginForm'
-import { useApolloClient } from '@apollo/client'
-import { useLazyQuery } from '@apollo/client'
-import { CURRENT_USER } from './queries'
-
-const Notification = ({ errorMessage }) => {
-  if (!errorMessage) {
-    return null
-  }
-  return (
-    <div style={{color: 'red'}}>
-      {errorMessage}
-    </div>
-  )
-}
+import NewBook from './components/NewBook'
+import Notification from './components/Notification'
+import Recommend from './components/Recommend'
+import { useLazyQuery, useSubscription, useApolloClient } from '@apollo/client'
+import {
+  ALL_BOOKS,
+  CURRENT_USER,
+  BOOK_ADDED
+} from './queries'
 
 const App = () => {
   const [page, setPage] = useState('authors')
@@ -40,7 +33,7 @@ const App = () => {
     getUser()
     setPage('recommend')
   }
- 
+
   useEffect(() => {
     if (result.data) {
       setCurrentUser(result.data.me)
@@ -62,6 +55,27 @@ const App = () => {
     setPage('authors')
   }
 
+  const updateCacheWith = (addedBook) => {
+    const includedIn = (set, object) =>
+      set.map(b => b.id).includes(object.id)
+
+    const dataInStore = client.readQuery({ query: ALL_BOOKS })
+    if (!includedIn(dataInStore.allBooks, addedBook)) {
+      client.writeQuery({
+        query: ALL_BOOKS,
+        data: { allBooks : dataInStore.allBooks.concat(addedBook) }
+      })
+      window.alert(`A new book added: ${addedBook.title}`)
+    }
+  }
+
+  useSubscription(BOOK_ADDED, {
+    onSubscriptionData: ({ subscriptionData }) => {
+      const addedBook = subscriptionData.data.bookAdded
+      updateCacheWith(addedBook)
+    }
+  })
+
   return (
     <div>
       <Notification errorMessage={errorMessage} />
@@ -70,9 +84,9 @@ const App = () => {
         <button onClick={() => setPage('books')}>books</button>
         {token && <button onClick={() => setPage('add')}>add book</button>}
         {token && <button onClick={fetchUser}>recommend</button>}
-        {!token && <button onClick={() => setPage('createUser')}>add user</button>}
-        {!token && <button onClick={() => setPage('login')}>login</button>}
-        {token && <button onClick={logout}>logout</button>}
+        {!token && <button onClick={() => setPage('createUser')}>add user</button>}
+        {!token && <button onClick={() => setPage('login')}>login</button>}
+        {token && <button onClick={logout}>logout</button>}
       </div>
 
       <Authors
@@ -84,15 +98,15 @@ const App = () => {
       />
 
       <NewBook
-        show={page === 'add'} setError={notify}
+        show={page === 'add'} setError={notify} updateCacheWith={updateCacheWith}
       />
 
-      {currentUser && 
+      {currentUser &&
         <Recommend
           show={page === 'recommend'} setError={notify} user={currentUser}
         />
       }
-      
+
       <CreateUserForm
         show={page === 'createUser'} setError={notify} setPage={setPage}
       />
