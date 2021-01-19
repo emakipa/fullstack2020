@@ -1,5 +1,5 @@
 const { UserInputError, AuthenticationError, PubSub } = require('apollo-server')
-const { v1: uuid } = require('uuid')
+//const { v1: uuid } = require('uuid')
 const jwt = require('jsonwebtoken')
 const Book = require('./models/book')
 const Author = require('./models/author')
@@ -28,25 +28,25 @@ const resolvers = {
         return await Book.find({ genres: { $in: [ args.genre ] } })
       }
 
-      return await Book.find({}) 
+      return await Book.find({})
     },
-    allAuthors: async (root, args) => {
+    allAuthors: async () => {
       let authors = await Author.find({})
       return authors
     },
     me: (root, args, { currentUser }) => {
       return currentUser
-    }   
+    }
   },
   Author: {
-    bookCount: async (root, args) => {
+    bookCount: async (root) => {
       return await Book.find({ author: { $in: [ root.id ] } }).countDocuments()
     }
   },
   Book: {
-    author: async (root, args) => {
+    author: async (root) => {
       const author = await Author.findOne({ _id: root.author })
-      return { 
+      return {
         name: author.name,
         born: author.born
       }
@@ -70,7 +70,7 @@ const resolvers = {
       //if author does not exist in authors, author is added
       if (!author) {
         try {
-          author = new Author({ name: args.author, born: null });
+          author = new Author({ name: args.author, born: null })
           await author.save()
         } catch (error) {
           if (error.name === 'ValidationError') {
@@ -81,16 +81,16 @@ const resolvers = {
             throw new UserInputError(error.message, {
               invalidArgs: args.author,
             })
-          } 
+          }
         }
-      } 
+      }
 
       book = new Book(
-        { 
+        {
           title: args.title,
           author: author._id,
           published: args.published,
-          genres: args.genres 
+          genres: args.genres
         }
       )
 
@@ -128,12 +128,12 @@ const resolvers = {
           born: args.setBornTo,
           _id: author.id
         }
-        const updatedAuthor = await Author.findByIdAndUpdate(updateAuthor._id, updateAuthor, {new: true}) 
+        const updatedAuthor = await Author.findByIdAndUpdate(updateAuthor._id, updateAuthor, { new: true })
         return updatedAuthor
       } catch (error) {
         throw new UserInputError(error.message, {
           invalidArgs: args
-      })
+        })
       }
     },
     createUser: async (root, args) => {
@@ -157,31 +157,31 @@ const resolvers = {
           throw new UserInputError(error.message, {
             invalidArgs: args,
           })
-        } 
+        }
       }
 
-      return user  
+      return user
     },
     login: async (root, args) => {
       const user = await User.findOne({ username: args.username })
-  
+
       if ( !user || args.password !== 'secret' ) {
-        throw new UserInputError("wrong credentials")
+        throw new UserInputError('wrong credentials')
       }
-  
+
       const userForToken = {
         username: user.username,
         id: user._id,
       }
-  
+
       return { value: jwt.sign(userForToken, JWT_SECRET) }
-    }  
+    }
   },
   Subscription: {
     bookAdded: {
       subscribe: () => pubsub.asyncIterator(['BOOK_ADDED'])
     },
-  },  
+  },
 }
 
 module.exports = { resolvers }
