@@ -5,6 +5,7 @@ const { resolvers } = require('./resolver')
 const mongoose = require('mongoose')
 const jwt = require('jsonwebtoken')
 const User = require('./models/user')
+const { bookCountLoader } = require('./loader')
 
 const MONGODB_URI = process.env.MONGODB_URI
 const JWT_SECRET = process.env.SECRET
@@ -29,7 +30,14 @@ const server = new ApolloServer({
         auth.substring(7), JWT_SECRET
       )
       const currentUser = await User.findById(decodedToken.id)
-      return { currentUser }
+      return {
+        currentUser,
+        bookCountLoader: bookCountLoader()
+      }
+    }
+
+    return {
+      bookCountLoader: bookCountLoader()
     }
   }
 })

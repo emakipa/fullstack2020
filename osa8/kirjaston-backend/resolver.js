@@ -1,5 +1,4 @@
 const { UserInputError, AuthenticationError, PubSub } = require('apollo-server')
-//const { v1: uuid } = require('uuid')
 const jwt = require('jsonwebtoken')
 const Book = require('./models/book')
 const Author = require('./models/author')
@@ -22,7 +21,7 @@ const resolvers = {
       }
       if (args.author) {
         const author = await Author.findOne({ name: args.author })
-        return await Book.find({ author: { $in: [ author._id ] } })
+        return await Book.find({ authorId: { $in: [ author._id ] } })
       }
       if (args.genre) {
         return await Book.find({ genres: { $in: [ args.genre ] } })
@@ -39,8 +38,8 @@ const resolvers = {
     }
   },
   Author: {
-    bookCount: async (root) => {
-      return await Book.find({ author: { $in: [ root.id ] } }).countDocuments()
+    bookCount: async (root, args, { bookCountLoader }) => {
+      return await bookCountLoader.load(root.id)
     }
   },
   Book: {
@@ -67,7 +66,7 @@ const resolvers = {
       }
 
       let author = await Author.findOne({ name: args.author })
-      //if author does not exist in authors, author is added
+      // if author does not exist in authors, author is added
       if (!author) {
         try {
           author = new Author({ name: args.author, born: null })

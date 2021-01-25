@@ -2,5 +2,5 @@
 
 #### osa8 exercises
 
-* kirjaston-backend    (exercise 8.1 - 8.7, 8.13 - 8.16, (_8.18_), 8.23)
-* kirjaston-frontend    (exercise 8.8 - 8.12, (_8.13 - 8.15_), 8.17 - 8.22, 8.24 - 8.25)
+* kirjaston-backend    (exercises 8.1 - 8.7, 8.13 - 8.16, 8.23, 8.26)
+* kirjaston-frontend    (exercises 8.8 - 8.12, 8.17 - 8.22, 8.24 - 8.25)
