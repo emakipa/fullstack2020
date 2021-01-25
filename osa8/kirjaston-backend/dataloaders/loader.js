@@ -1,5 +1,5 @@
 const DataLoader = require('dataloader')
-const Book = require('./models/book')
+const Book = require('../models/book')
 const collection = require('lodash/collection')
 
 const bookCountLoader = () => {

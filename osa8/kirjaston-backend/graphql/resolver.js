@@ -1,8 +1,8 @@
 const { UserInputError, AuthenticationError, PubSub } = require('apollo-server')
 const jwt = require('jsonwebtoken')
-const Book = require('./models/book')
-const Author = require('./models/author')
-const User = require('./models/user')
+const Book = require('../models/book')
+const Author = require('../models/author')
+const User = require('../models/user')
 
 const pubsub = new PubSub()
 
@@ -21,7 +21,7 @@ const resolvers = {
       }
       if (args.author) {
         const author = await Author.findOne({ name: args.author })
-        return await Book.find({ authorId: { $in: [ author._id ] } })
+        return await Book.find({ author: { $in: [ author._id ] } })
       }
       if (args.genre) {
         return await Book.find({ genres: { $in: [ args.genre ] } })

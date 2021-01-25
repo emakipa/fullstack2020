@@ -1,11 +1,11 @@
 require('dotenv').config()
 const { ApolloServer } = require('apollo-server')
-const { typeDefs } = require('./schema')
-const { resolvers } = require('./resolver')
+const { typeDefs } = require('./graphql/schema')
+const { resolvers } = require('./graphql/resolver')
 const mongoose = require('mongoose')
 const jwt = require('jsonwebtoken')
 const User = require('./models/user')
-const { bookCountLoader } = require('./loader')
+const { bookCountLoader } = require('./dataloaders/loader')
 
 const MONGODB_URI = process.env.MONGODB_URI
 const JWT_SECRET = process.env.SECRET
