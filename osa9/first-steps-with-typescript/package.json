@@ -1,0 +1,16 @@
+{
+  "name": "first-steps-with-typescript",
+  "version": "0.0.1",
+  "description": "First TypeScript exercises",
+  "main": "index.js",
+  "scripts": {
+    "ts-node": "ts-node",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Esa Mäkipää",
+  "license": "MIT",
+  "devDependencies": {
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3"
+  }
+}
