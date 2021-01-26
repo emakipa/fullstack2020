@@ -1,3 +1,8 @@
+interface exerciseValues {
+  exerciseHours: Array<number>;
+  targetHours: number;
+}
+
 interface ResultValues {
   periodLength: number;
   trainingDays: number;
@@ -8,6 +13,24 @@ interface ResultValues {
   average: number;
 }
 
+const parseExerciseArguments = (args: Array<string>): exerciseValues => {
+  if (args.length < 4) throw new Error('Not enough arguments, give target hours and exercise hours, e.g. npm run calculateExercises 2 1 0 ...');
+
+  // Exercise hours list starts at args[3]
+  let hours = args.slice(3);
+  // Convert hours to array of numbers needed for calculateExercises function
+  let hoursArray = hours.map(element => Number(element));
+  
+  if (!hoursArray.some(isNaN) && !isNaN(Number(args[2]))) {
+    return {
+      exerciseHours: hoursArray,
+      targetHours: Number(args[2])
+    }
+  } else {
+    throw new Error('Provided values were not numbers!');
+  }
+}
+
 const calculateExercises = (exerciseHours: Array<number>, targetHours: number): ResultValues => {
 
   if (exerciseHours.length !== 0) { 
@@ -16,8 +39,8 @@ const calculateExercises = (exerciseHours: Array<number>, targetHours: number): 
     const totalHours = exerciseHours.reduce((a: number, b: number) => a + b, 0)
     const average = totalHours / exerciseHours.length;
 
-    var rating = null;
-    var ratingDescription = null;
+    let rating = null;
+    let ratingDescription = null;
 
     if (average < targetHours * 0.9) {
       rating = 1;
@@ -47,7 +70,8 @@ const calculateExercises = (exerciseHours: Array<number>, targetHours: number): 
 }
 
 try {
-  console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2));
-} catch (e) {
-  console.log('Something went wrong, error message: ', e.message);
+  const { exerciseHours, targetHours } = parseExerciseArguments(process.argv);
+  console.log(calculateExercises(exerciseHours, targetHours));
+} catch (error) {
+  console.log('Error, something bad happened, message: ', error.message);
 }

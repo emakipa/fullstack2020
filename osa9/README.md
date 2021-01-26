@@ -2,4 +2,4 @@
 
 #### osa9 exercises
 
-* first-steps-with-typescript    (exercises setup, 9.1 - 9.2)
+* first-steps-with-typescript    (exercises setup, 9.1 - 9.3)
