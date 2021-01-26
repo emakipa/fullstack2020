@@ -2,6 +2,10 @@
 
 Exercise submissions for [Full stack open 2020](https://fullstackopen.com/en) course by University of Helsinki.
 
+### osa9
+
+* [first-steps-with-typescript](https://github.com/emakipa/fullstack2020/tree/master/osa9/first-steps-with-typescript)
+
 ### osa8
 
 * [kirjaston-backend](https://github.com/emakipa/fullstack2020/tree/master/osa8/kirjaston-backend)
@@ -66,10 +70,10 @@ osa5 | 22 / 22
 osa6 | 21 / 21
 osa7 | 20 / 21
 osa8 | 26 / 26
-osa9 |  x / 27
+osa9 |  2 / 27
 osa10 | x / 27
 ------- | -------------
-total | 173/228
+total | 175/228
 
 
 
