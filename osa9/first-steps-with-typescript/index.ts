@@ -14,19 +14,19 @@ app.get('/bmi', (req, res) => {
       !(Number(req.query.height) <= 0) &&
       !(Number(req.query.weight) <= 0)) {
         
-    const bmi = calculateBmi(Number(req.query.height), Number(req.query.weight))
+    const bmi = calculateBmi(Number(req.query.height), Number(req.query.weight));
 
     const result = {
       height: Number(req.query.height),
       weight: Number(req.query.weight),
       bmi: bmi
-    }
+    };
       
     res.json(result);
   } else {
     res.status(400).json({ error: 'malformatted parameters' }).end();
   }
-});  
+});
 
 const PORT = 3003;
 

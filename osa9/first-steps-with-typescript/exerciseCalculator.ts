@@ -17,26 +17,26 @@ const parseExerciseArguments = (args: Array<string>): exerciseValues => {
   if (args.length < 4) throw new Error('Not enough arguments, give target hours and exercise hours, e.g. npm run calculateExercises 2 1 0 ...');
 
   // Exercise hours list starts at args[3]
-  let hours = args.slice(3);
+  const hours = args.slice(3);
   // Convert hours to array of numbers needed for calculateExercises function
-  let hoursArray = hours.map(element => Number(element));
+  const hoursArray = hours.map(element => Number(element));
   
   if (!hoursArray.some(isNaN) && !isNaN(Number(args[2]))) {
     return {
       exerciseHours: hoursArray,
       targetHours: Number(args[2])
-    }
+    };
   } else {
     throw new Error('Provided values were not numbers!');
   }
-}
+};
 
 const calculateExercises = (exerciseHours: Array<number>, targetHours: number): ResultValues => {
 
   if (exerciseHours.length !== 0) { 
     
-    const trainingDays = exerciseHours.filter((a: number) => a > 0).length
-    const totalHours = exerciseHours.reduce((a: number, b: number) => a + b, 0)
+    const trainingDays = exerciseHours.filter((a: number) => a > 0).length;
+    const totalHours = exerciseHours.reduce((a: number, b: number) => a + b, 0);
     const average = totalHours / exerciseHours.length;
 
     let rating = null;
@@ -63,15 +63,15 @@ const calculateExercises = (exerciseHours: Array<number>, targetHours: number): 
       ratingDescription: ratingDescription,
       target: targetHours,
       average: average
-    }
+    };
   } else {
     throw new Error('Results can not be calculated, no exercise hours given!');
   }
-}
+};
 
 try {
   const { exerciseHours, targetHours } = parseExerciseArguments(process.argv);
   console.log(calculateExercises(exerciseHours, targetHours));
 } catch (error) {
-  console.log('Error, something bad happened, message: ', error.message);
+  console.log('Error, something bad happened, message: ', error.message); // eslint-disable-line
 }

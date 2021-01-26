@@ -11,11 +11,11 @@ const parseBmiArguments = (args: Array<string>): bmiValues => {
     return {
       height: Number(args[2]),
       weight: Number(args[3])
-    }
+    };
   } else {
     throw new Error('Provided values were not numbers!');
   }
-}
+};
 
 export const calculateBmi = (height: number, weight: number): string => {
 
@@ -53,11 +53,11 @@ export const calculateBmi = (height: number, weight: number): string => {
   else {
     throw new Error('Results can not be calculated, height can not be 0!');
   }
-}
+};
 
 try {
   const { height, weight } = parseBmiArguments(process.argv);
   console.log(calculateBmi(height, weight));
 } catch (error) {
-  console.log('Error, something bad happened, message: ', error.message);
+  console.log('Error, something bad happened, message: ', error.message); // eslint-disable-line
 }
