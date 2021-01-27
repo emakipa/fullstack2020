@@ -31,7 +31,7 @@ const parseExerciseArguments = (args: Array<string>): exerciseValues => {
   }
 };
 
-const calculateExercises = (exerciseHours: Array<number>, targetHours: number): ResultValues => {
+export const calculateExercises = (exerciseHours: Array<number>, targetHours: number): ResultValues => {
 
   if (exerciseHours.length !== 0) { 
     
@@ -69,9 +69,12 @@ const calculateExercises = (exerciseHours: Array<number>, targetHours: number): 
   }
 };
 
-try {
-  const { exerciseHours, targetHours } = parseExerciseArguments(process.argv);
-  console.log(calculateExercises(exerciseHours, targetHours));
-} catch (error) {
-  console.log('Error, something bad happened, message: ', error.message); // eslint-disable-line
-}
+// Module is run directly from the command line
+if (require.main === module) {
+  try {
+    const { exerciseHours, targetHours } = parseExerciseArguments(process.argv);
+    console.log(calculateExercises(exerciseHours, targetHours));
+  } catch (error) {
+    console.log('Error, something bad happened, message: ', error.message); // eslint-disable-line
+  }
+}  

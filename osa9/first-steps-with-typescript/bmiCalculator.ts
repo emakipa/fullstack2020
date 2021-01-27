@@ -55,9 +55,12 @@ export const calculateBmi = (height: number, weight: number): string => {
   }
 };
 
-try {
-  const { height, weight } = parseBmiArguments(process.argv);
-  console.log(calculateBmi(height, weight));
-} catch (error) {
-  console.log('Error, something bad happened, message: ', error.message); // eslint-disable-line
+// Module is run directly from the command line
+if (require.main === module) {
+  try {
+    const { height, weight } = parseBmiArguments(process.argv);
+    console.log(calculateBmi(height, weight));
+  } catch (error) {
+    console.log('Error, something bad happened, message: ', error.message); // eslint-disable-line
+  }
 }
