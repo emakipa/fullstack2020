@@ -5,6 +5,7 @@ Exercise submissions for [Full stack open 2020](https://fullstackopen.com/en) co
 ### osa9
 
 * [first-steps-with-typescript](https://github.com/emakipa/fullstack2020/tree/master/osa9/first-steps-with-typescript)
+* [patientor-backend](https://github.com/emakipa/fullstack2020/tree/master/osa9/patientor-backend)
 
 ### osa8
 
