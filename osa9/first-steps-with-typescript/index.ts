@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import express from 'express';
 import { calculateBmi } from './bmiCalculator';
 import { calculateExercises } from './exerciseCalculator';
@@ -34,18 +32,18 @@ app.get('/bmi', (req, res) => {
 });
 
 app.post('/exercises', (req, res) => {
-  const body = req.body;
-  const exerciseHours = body.daily_exercises;
-  const targetHours = body.target;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment
+  const { daily_exercises, target }: any = req.body;
 
-  if (!exerciseHours || !targetHours) {
-    res.status(400).json({ error: 'parameters missing' }).end();
+  if (!daily_exercises || !target) {
+    res.status(400).json({ error: 'parameters missing' });
   } 
-  if (!Array.isArray(exerciseHours) || exerciseHours.some(isNaN) || isNaN(Number(targetHours))) {
-    res.status(400).json({ error: 'malformatted parameters' }).end();
+  if (!Array.isArray(daily_exercises) || daily_exercises.some(isNaN) || isNaN(Number(target))) {
+    res.status(400).json({ error: 'malformatted parameters' });
   }
 
-  const result = calculateExercises(exerciseHours, Number(targetHours));
+  const result = calculateExercises(daily_exercises, Number(target));
+  console.log(result);
   res.json(result);
 });
 
