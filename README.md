@@ -6,6 +6,7 @@ Exercise submissions for [Full stack open 2020](https://fullstackopen.com/en) co
 
 * [first-steps-with-typescript](https://github.com/emakipa/fullstack2020/tree/master/osa9/first-steps-with-typescript)
 * [patientor-backend](https://github.com/emakipa/fullstack2020/tree/master/osa9/patientor-backend)
+* [patientor-frontend](https://github.com/emakipa/fullstack2020/tree/master/osa9/patientor-frontend)
 
 ### osa8
 
@@ -71,10 +72,10 @@ osa5 | 22 / 22
 osa6 | 21 / 21
 osa7 | 20 / 21
 osa8 | 26 / 26
-osa9 |  7 / 27
+osa9 |  9 / 27
 osa10 | x / 27
 ------- | -------------
-total | 180/228
+total | 182/228
 
 
 
