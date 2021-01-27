@@ -3,4 +3,5 @@
 #### osa9 exercises
 
 * first-steps-with-typescript    (exercises setup, 9.1 - 9.7)
-* patientor-backend    (exercises setup)
+* patientor-backend    (exercises setup, 9.8)
+* patientor-frontend    (exercises setup, 9.9)
