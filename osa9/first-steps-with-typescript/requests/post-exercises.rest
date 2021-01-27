@@ -1,10 +1,7 @@
-POST http://localhost:3003/api/blogs
+POST http://localhost:3003/exercises
 Content-Type: application/json
 
 {
-    "title": "Title1",
-    "author": "Author1",
-    "url": "Url1",
-    "likes": 0,
-    "userId": "5f7e98fd90cda905869c6889"
- }
+    "daily_exercises": [3, 0, 2, 4.5, 0, 3, 1],
+    "target": 2
+}
