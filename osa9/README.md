@@ -5,4 +5,4 @@
 * first-steps-with-typescript    (exercises setup, 9.1 - 9.7)
 * patientor-backend    (exercises setup, 9.8, 9.10 - 9.13)
 * patientor-frontend    (exercises setup, 9.9)
-* kurssitiedot-with-typescript    (exercises setup, 9.14)
+* kurssitiedot-with-typescript    (exercises setup, 9.14 - 9.15)
