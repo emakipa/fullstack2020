@@ -5,4 +5,4 @@ const Header: React.FC<CourseName> = ({ name }) => {
   return <h1>{name}</h1>;
 };
 
-export default Header
+export default Header;

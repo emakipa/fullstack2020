@@ -1,8 +1,8 @@
 import React from 'react';
 import Part from './Part';
-import { CourseParts } from '../types';
+import { CoursePart } from '../types';
 
-const Content: React.FC<{ courseParts: CourseParts[] }> = ({ courseParts }) => {
+const Content: React.FC<{ courseParts: CoursePart[] }> = ({ courseParts }) => {
   return (
     <div>
       {courseParts.map(part =>
@@ -12,4 +12,4 @@ const Content: React.FC<{ courseParts: CourseParts[] }> = ({ courseParts }) => {
   )
 };
 
-export default Content
+export default Content;
