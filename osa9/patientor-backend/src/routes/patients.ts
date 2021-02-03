@@ -9,6 +9,17 @@ router.get('/', (_req, res) => {
   res.send(patientService.getPatients());
 });
 
+// Get one patient
+router.get('/:id', (req, res) => {
+  try {
+    const patient = patientService.getOnePatient(req.params.id);
+    res.send(patient);
+  } catch (error) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    res.status(404).send(error.message);
+  }
+});
+
 // Add patient
 router.post('/', (req, res) => {
   try {
