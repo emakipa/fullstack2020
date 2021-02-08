@@ -32,7 +32,15 @@ interface BaseEntry {
   diagnosisCodes?: Array<Diagnosis['code']>;
 }
 
+export enum HealthCheckRating {
+  "Healthy" = 0,
+  "LowRisk" = 1,
+  "HighRisk" = 2,
+  "CriticalRisk" = 3
+}
+
 export enum EntryType {
+  HealthCheck = 'HealthCheck',
   Hospital = 'Hospital',
   OccupationalHealthcare = 'OccupationalHealthcare'
 }
@@ -47,6 +55,11 @@ export interface Discharge {
   criteria: string;
 }
 
+interface HealthCheckEntry extends BaseEntry {
+  type: EntryType.HealthCheck;
+  healthCheckRating: HealthCheckRating;
+}
+
 interface HospitalEntry extends BaseEntry {
   type: EntryType.Hospital;
   discharge: Discharge;
@@ -59,5 +72,6 @@ interface OccupationalHealthcareEntry extends BaseEntry {
 }
 
 export type Entry =
+  | HealthCheckEntry
   | HospitalEntry
   | OccupationalHealthcareEntry;
