@@ -10,6 +10,7 @@ const PatientPage: React.FC = () => {
 
   const { id } = useParams<{ id: string }>();
   const [{ patient }, dispatch] = useStateValue();
+  const [{ diagnoses }] = useStateValue();
 
   React.useEffect(() => {
     const fetchPatient = async () => {
@@ -56,7 +57,7 @@ const PatientPage: React.FC = () => {
             <ul>
               {entry.diagnosisCodes?.map((code) => (
                 <li key={code}>
-                  {code}
+                  {code} {diagnoses[code].name}
                 </li>
               ))}    
             </ul> 
