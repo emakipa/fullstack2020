@@ -57,7 +57,7 @@ const PatientPage: React.FC = () => {
             <ul>
               {entry.diagnosisCodes?.map((code) => (
                 <li key={code}>
-                  {code} {diagnoses[code].name}
+                  {code} {diagnoses[code] && diagnoses[code].name}
                 </li>
               ))}    
             </ul> 
