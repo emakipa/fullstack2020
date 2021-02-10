@@ -5,12 +5,13 @@ import { Gender, Patient } from "../types";
 import { apiBaseUrl } from "../constants";
 import { useStateValue, setPatient } from "../state";
 import { useParams } from "react-router-dom";
+import EntryDetails from "./EntryDetails";
+import Footer from "./Footer";
 
 const PatientPage: React.FC = () => {
 
   const { id } = useParams<{ id: string }>();
   const [{ patient }, dispatch] = useStateValue();
-  const [{ diagnoses }] = useStateValue();
 
   React.useEffect(() => {
     const fetchPatient = async () => {
@@ -51,18 +52,12 @@ const PatientPage: React.FC = () => {
           <b>Occupation:</b>{' '}{patient.occupation}
         </div>
         {patient.entries.length > 0 ? <h3>Entries</h3> : <h3>No entries</h3>}
-        {patient.entries.map((entry) => (
-          <Container key={entry.id}>
-            {entry.date}{' '}<i>{entry.description}</i>
-            <ul>
-              {entry.diagnosisCodes?.map((code) => (
-                <li key={code}>
-                  {code} {diagnoses[code] && diagnoses[code].name}
-                </li>
-              ))}    
-            </ul> 
-          </Container>
-        ))}
+        <div>
+          {patient.entries.map(entry => (
+            <EntryDetails key={entry.id} entry={entry} /> 
+          ))}
+        </div>
+        {patient.entries.length > 0 && <Footer />}
       </Container>      
     </div>
   );

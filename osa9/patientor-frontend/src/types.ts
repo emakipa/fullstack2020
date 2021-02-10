@@ -55,17 +55,17 @@ export interface Discharge {
   criteria: string;
 }
 
-interface HealthCheckEntry extends BaseEntry {
+export interface HealthCheckEntry extends BaseEntry {
   type: EntryType.HealthCheck;
   healthCheckRating: HealthCheckRating;
 }
 
-interface HospitalEntry extends BaseEntry {
+export interface HospitalEntry extends BaseEntry {
   type: EntryType.Hospital;
   discharge: Discharge;
 }
 
-interface OccupationalHealthCareEntry extends BaseEntry {
+export interface OccupationalHealthCareEntry extends BaseEntry {
   type: EntryType.OccupationalHealthCare;
   employerName: string;
   sickLeave?: SickLeave;
