@@ -42,7 +42,7 @@ export enum HealthCheckRating {
 export enum EntryType {
   HealthCheck = 'HealthCheck',
   Hospital = 'Hospital',
-  OccupationalHealthcare = 'OccupationalHealthcare'
+  OccupationalHealthCare = 'OccupationalHealthCare'
 }
 
 export interface SickLeave {
@@ -66,7 +66,7 @@ interface HospitalEntry extends BaseEntry {
 }
 
 interface OccupationalHealthcareEntry extends BaseEntry {
-  type: EntryType.OccupationalHealthcare;
+  type: EntryType.OccupationalHealthCare;
   employerName: string;
   sickLeave?: SickLeave;
 }
