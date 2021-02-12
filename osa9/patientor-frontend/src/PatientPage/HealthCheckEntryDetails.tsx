@@ -1,5 +1,5 @@
 import React from "react";
-import { Icon, Card } from "semantic-ui-react";
+import { Icon, Card, List } from "semantic-ui-react";
 import { HealthCheckEntry, HealthCheckRating } from "../types";
 import DiagnosisList from "./DiagnosisList";
 
@@ -24,14 +24,20 @@ const HealthCheckEntryDetails: React.FC<({ entry: HealthCheckEntry })> = ({ entr
           </Card.Header>
           <Card.Meta>
             by {entry.specialist}
-            </Card.Meta>
+          </Card.Meta>
           <Card.Description>
             <i color = "grey">{entry.description}</i> 
           </Card.Description>
           {entry.diagnosisCodes && (
             <DiagnosisList diagnosisCodes={entry.diagnosisCodes} />
-          )}  
-          {heartIcon()}
+          )}
+          <List>
+            <List.Item>
+              <List.Icon>
+                {heartIcon()}
+              </List.Icon>
+            </List.Item>
+          </List>
         </Card.Content>  
       </Card>
     </Card.Group>      

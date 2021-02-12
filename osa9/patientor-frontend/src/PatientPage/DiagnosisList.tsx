@@ -11,7 +11,7 @@ const DiagnosisList: React.FC<({ diagnosisCodes: Array<Diagnosis["code"]> })> = 
     <List>
       <List.Item>
         <List.Header>
-          {diagnosisCodes.length > 1 ? "Diagnoses" : "Diagnosis"}
+          {diagnosisCodes.length > 1 ? "Diagnoses" : diagnosisCodes.length === 1 ? "Diagnosis" : ""}
         </List.Header>
       </List.Item>
       {diagnosisCodes.map((code) => (           
