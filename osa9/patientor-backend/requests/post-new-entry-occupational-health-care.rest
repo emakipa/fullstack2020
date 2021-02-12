@@ -1,0 +1,17 @@
+POST http://localhost:3001/api/patients/d2773336-f723-11e9-8f0b-362b9e155667/entries
+Content-Type: application/json
+
+{
+    "date": "2021-02-12",
+    "description": "Very minor radiation poisoning",
+    "type": "OccupationalHealthCare",
+    "specialist": "MD House",
+    "employerName": "New York City",
+    "diagnosisCodes": [
+      "Z57.1"
+    ],
+    "sickLeave": {
+      "startDate": "2021-02-12",
+      "endDate": "2021-03-26"
+    }  
+}

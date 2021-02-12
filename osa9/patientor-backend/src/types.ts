@@ -22,21 +22,28 @@ export enum Gender {
 
 export type NonSensitivePatientData = Omit<Patient, 'ssn' | 'entries'>;
 
-export type NewPatientEntry = Omit<Patient, 'id'>;
+export type NewPatient = Omit<Patient, 'id'>;
 
-interface BaseEntry {
+export type NewBaseEntry = Omit<BaseEntry, 'id'>;
+
+export type NewEntry = 
+  | Omit<HealthCheckEntry, 'id'>
+  | Omit<HospitalEntry, 'id'>
+  | Omit<OccupationalHealthCareEntry, 'id'>; 
+
+export interface BaseEntry {
   id: string;
-  description: string;
   date: string;
+  description: string;
   specialist: string;
   diagnosisCodes?: Array<Diagnosis['code']>;
 }
 
 export enum HealthCheckRating {
-  "Healthy" = 0,
-  "LowRisk" = 1,
-  "HighRisk" = 2,
-  "CriticalRisk" = 3
+  'Healthy' = 0,
+  'LowRisk' = 1,
+  'HighRisk' = 2,
+  'CriticalRisk' = 3
 }
 
 export enum EntryType {
@@ -65,7 +72,7 @@ interface HospitalEntry extends BaseEntry {
   discharge: Discharge;
 }
 
-interface OccupationalHealthcareEntry extends BaseEntry {
+interface OccupationalHealthCareEntry extends BaseEntry {
   type: EntryType.OccupationalHealthCare;
   employerName: string;
   sickLeave?: SickLeave;
@@ -74,4 +81,4 @@ interface OccupationalHealthcareEntry extends BaseEntry {
 export type Entry =
   | HealthCheckEntry
   | HospitalEntry
-  | OccupationalHealthcareEntry;
+  | OccupationalHealthCareEntry;

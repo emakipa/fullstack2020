@@ -1,6 +1,9 @@
 import express from 'express';
 import patientService from '../services/patientService';
-import { toNewPatient } from '../utils';
+import { 
+  toNewEntry,  
+  toNewPatient
+} from '../utils';
 
 const router = express.Router();
 
@@ -20,7 +23,7 @@ router.get('/:id', (req, res) => {
   }
 });
 
-// Add patient
+// Add a patient
 router.post('/', (req, res) => {
   try {
     const newPatient = toNewPatient(req.body);
@@ -31,6 +34,28 @@ router.post('/', (req, res) => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     res.status(400).send(error.message);
   }
+});
+
+// Add entry for a patient
+router.post('/:id/entries', (req, res) => {
+  // Find patient by patient id
+  const patient = patientService.getOnePatient(req.params.id);
+
+  if (patient) {
+    try {
+      // Validate new entry
+      const newEntry = toNewEntry(req.body);
+
+      // Add entry
+      const addedEntry = patientService.addEntry(patient, newEntry);
+      res.json(addedEntry);
+    } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      res.status(400).send(error.message);
+    }
+  } else {
+    res.status(400).send({ error: 'Patient with given id does not exist' });
+  }  
 });
 
 export default router;

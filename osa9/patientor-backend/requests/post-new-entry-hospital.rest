@@ -1,0 +1,16 @@
+POST http://localhost:3001/api/patients/d2773336-f723-11e9-8f0b-362b9e155667/entries
+Content-Type: application/json
+
+{
+    "date": "2021-02-12",
+    "description": "Healing time appr. 6 weeks",
+    "type": "Hospital",
+    "specialist": "MD House",
+    "diagnosisCodes": [
+      "S62.5"
+    ],
+    "discharge": {
+      "date": "2021-03-26",
+      "criteria": "Thumb has healed."
+    }  
+}
