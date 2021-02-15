@@ -5,6 +5,7 @@ import { TextField, NumberField, DiagnosisSelection } from "../AddPatientModal/F
 import { SelectField, EntryTypeOption } from "./FormField";
 import { HealthCheckEntry, EntryType } from "../types";
 import { useStateValue } from "../state";
+import { isDate, isHealthCheckRating } from "../utils";
 
 /*
  * use type HealthCheckEntry, but omit id,
@@ -37,15 +38,25 @@ export const AddEntryForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
       onSubmit={onSubmit}
       validate={values => {
         const requiredError = "Field is required";
+        const invalidFormatError = "Invalid format";
         const errors: { [field: string]: string } = {};
+        if (!isDate(values.date)) {
+          errors.date = invalidFormatError;
+        }
         if (!values.date) {
           errors.date = requiredError;
         }
         if (!values.description) {
-          errors.ddescription = requiredError;
+          errors.description = requiredError;
         }
         if (!values.specialist) {
           errors.specialist = requiredError;
+        }
+        if (!isHealthCheckRating(values.healthCheckRating)) {
+          errors.healthCheckRating = invalidFormatError;
+        }
+        if (values.healthCheckRating.toString() === "" ) {
+          errors.healthCheckRating = requiredError;
         }
         return errors;
       }}
