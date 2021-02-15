@@ -46,9 +46,9 @@ router.post('/:id/entries', (req, res) => {
       // Validate new entry
       const newEntry = toNewEntry(req.body);
 
-      // Add entry
-      const addedEntry = patientService.addEntry(patient, newEntry);
-      res.json(addedEntry);
+      // Add entry to patient
+      const patientWithAddedEntry = patientService.addEntry(patient, newEntry);
+      res.json(patientWithAddedEntry);
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       res.status(400).send(error.message);

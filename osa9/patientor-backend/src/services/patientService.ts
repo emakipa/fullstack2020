@@ -46,7 +46,7 @@ const addEntry = (patient: Patient, newEntry: NewEntry): Patient => {
   };
 
   // Add new entry to patient's entries
-  patient.entries.push(entry);
+  patient.entries.unshift(entry);
 
   return patient;
 };
