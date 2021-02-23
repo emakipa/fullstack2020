@@ -1,6 +1,14 @@
 import React, { useState } from "react";
-import { Form, DropdownProps, Dropdown } from "semantic-ui-react";
-import { EntryType, NewEntry, NewBaseEntry } from "../types";
+import {
+  Dropdown,
+  DropdownProps,
+  Form
+} from "semantic-ui-react";
+import {
+  EntryType,
+  NewBaseEntry,
+  NewEntry
+} from "../types";
 import AddEntryForm from "./AddEntryForm";
 
 interface Props {
@@ -22,7 +30,12 @@ const entryTypeOptions = [
     value: EntryType.Hospital,
     icon: "hospital"
   },
-
+  {
+    key: EntryType.OccupationalHealthCare,
+    text: "Occupational health care",
+    value: EntryType.OccupationalHealthCare,
+    icon: "stethoscope"
+  },
 ];
 
 // Initial values for the forms
@@ -45,6 +58,16 @@ const hospitalEntryFormInitialValues: NewEntry = {
   discharge: { 
     date: "",
     criteria: "",
+  }
+};
+
+const occupationalHealthCareEntryFormInitialValues: NewEntry = {
+  type: EntryType.OccupationalHealthCare,
+  ...baseEntryFormInitialValues,
+  employerName: "",
+  sickLeave: { 
+    startDate: "",
+    endDate: "",
   }
 };
 
@@ -74,6 +97,14 @@ export const EntryFormSelection: React.FC<Props> = ({ onSubmit, onCancel }) => {
         return (
           <AddEntryForm
             initialValues={hospitalEntryFormInitialValues}
+            onSubmit={onSubmit}
+            onCancel={onCancel} 
+          />
+        );
+        case EntryType.OccupationalHealthCare:
+        return (
+          <AddEntryForm
+            initialValues={occupationalHealthCareEntryFormInitialValues}
             onSubmit={onSubmit}
             onCancel={onCancel} 
           />

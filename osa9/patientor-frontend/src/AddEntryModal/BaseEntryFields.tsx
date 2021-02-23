@@ -1,6 +1,12 @@
-import { Field, FormikProps } from "formik";
 import React from "react";
-import { DiagnosisSelection, TextField } from "../AddPatientModal/FormField";
+import {
+  Field,
+  FormikProps
+} from "formik";
+import {
+  DiagnosisSelection,
+  TextField
+} from "../AddPatientModal/FormField";
 import { useStateValue } from "../state";
 
 interface Props {

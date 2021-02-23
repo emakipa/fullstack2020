@@ -1,6 +1,9 @@
 import React from "react";
 import { Field } from "formik";
-import { NumberField, TextField } from "../AddPatientModal/FormField";
+import {
+  NumberField,
+  TextField
+} from "../AddPatientModal/FormField";
 import { EntryType } from "../types";
 
 const EntryTypeSpecificFields: React.FC<({ entryType: EntryType })> = ({ entryType }) => {
@@ -33,7 +36,30 @@ const EntryTypeSpecificFields: React.FC<({ entryType: EntryType })> = ({ entryTy
               component={TextField}
             />
           </div>
-        );  
+        );
+      case EntryType.OccupationalHealthCare:
+        return (
+          <div>
+            <Field
+              label="Employer name"
+              placeholder="Employer name"
+              name="employerName"
+              component={TextField}
+            />
+            <Field
+              label="Sick leave start date"
+              placeholder="YYYY-MM-DD"
+              name="sickLeave.startDate"
+              component={TextField}
+            />
+            <Field
+              label="Sick leave end date"
+              placeholder="YYYY-MM-DD"
+              name="sickLeave.endDate"
+              component={TextField}
+            />
+          </div>
+        ); 
     default:
       return null;  
   }  

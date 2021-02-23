@@ -28,7 +28,8 @@ export type NewBaseEntry = Omit<BaseEntry, 'id'>;
 
 export type NewEntry = 
   | Omit<HealthCheckEntry, 'id'>
-  | Omit<HospitalEntry, 'id'>;
+  | Omit<HospitalEntry, 'id'>
+  | Omit<OccupationalHealthCareEntry, 'id'>;
 
 interface BaseEntry {
   id: string;

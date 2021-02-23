@@ -1,5 +1,9 @@
 import React from "react";
-import { Card, Icon, List } from "semantic-ui-react";
+import {
+  Card,
+  Icon,
+  List
+} from "semantic-ui-react";
 import { OccupationalHealthCareEntry } from "../types";
 import DiagnosisList from "./DiagnosisList";
 

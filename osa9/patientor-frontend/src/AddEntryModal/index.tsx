@@ -1,5 +1,8 @@
 import React from 'react';
-import { Modal, Segment } from 'semantic-ui-react';
+import {
+  Modal,
+  Segment
+} from 'semantic-ui-react';
 import { NewEntry } from '../types';
 import EntryFormSelection from './EntryFormSelection';
 

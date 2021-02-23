@@ -1,14 +1,25 @@
 import React from "react";
 import axios from "axios";
-import { Button, Container, Icon } from "semantic-ui-react";
-import { Gender, Patient, NewEntry } from "../types";
+import {
+  Button,
+  Container,
+  Icon
+} from "semantic-ui-react";
+import {
+  Gender,
+  NewEntry,
+  Patient
+} from "../types";
 import { apiBaseUrl } from "../constants";
-import { useStateValue, setPatient, updatePatient } from "../state";
+import {
+  setPatient,
+  updatePatient,
+  useStateValue
+} from "../state";
 import { useParams } from "react-router-dom";
 import EntryDetails from "./EntryDetails";
 import Footer from "./Footer";
 import AddEntryModal from "../AddEntryModal";
-//import { EntryFormValues } from "../AddEntryModal/AddEntryForm";
 
 const PatientPage: React.FC = () => {
 

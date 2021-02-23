@@ -1,6 +1,13 @@
 import React from "react";
-import { Icon, Card, List } from "semantic-ui-react";
-import { HealthCheckEntry, HealthCheckRating } from "../types";
+import {
+  Card,
+  Icon,
+  List
+} from "semantic-ui-react";
+import {
+  HealthCheckEntry,
+  HealthCheckRating
+} from "../types";
 import DiagnosisList from "./DiagnosisList";
 
 const HealthCheckEntryDetails: React.FC<({ entry: HealthCheckEntry })> = ({ entry }) => {
