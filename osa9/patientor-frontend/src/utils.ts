@@ -9,7 +9,13 @@ export const assertNever = (value: never): never => {
 };
 
 // To check valid date
-export const isDate = (date: string): boolean => {
+export const isDate = (date: any): boolean => {
+  // Pattern for date (YYYY-MM-DD)
+  const re = /(^\w{4})-(\w{2})-(\w{2}$)/;
+  const resultArray = date.match(re);
+  if (!resultArray) {
+    return false;
+  }
   return Boolean(Date.parse(date));
 };
 

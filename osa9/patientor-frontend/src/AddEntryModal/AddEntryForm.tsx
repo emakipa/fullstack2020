@@ -1,50 +1,39 @@
 import React from "react";
-import { Grid, Button } from "semantic-ui-react";
-import { Field, Formik, Form } from "formik";
-import { TextField, NumberField, DiagnosisSelection } from "../AddPatientModal/FormField";
-import { SelectField, EntryTypeOption } from "./FormField";
-import { HealthCheckEntry, EntryType } from "../types";
-import { useStateValue } from "../state";
+import { Grid, Button, Divider } from "semantic-ui-react";
+import { Formik, Form } from "formik";
+import { EntryType, NewEntry } from "../types";
 import { isDate, isHealthCheckRating } from "../utils";
-
-/*
- * use type HealthCheckEntry, but omit id,
- * because it is irrelevant for new entry object.
- */
-export type EntryFormValues = Omit<HealthCheckEntry, "id">;
+import EntryTypeSpecificFields from "./EntryTypeSpecificFields";
+import BaseEntryFields from "./BaseEntryFields";
 
 interface Props {
-  onSubmit: (values: EntryFormValues) => void;
+  initialValues: NewEntry;
+  onSubmit: (values: NewEntry) => void;
   onCancel: () => void;
 }
 
-const entryTypeOptions: EntryTypeOption[] = [
-  { value: EntryType.HealthCheck, label: "Health check" },
-];
-
-export const AddEntryForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
-  const [{ diagnoses }] = useStateValue();
+export const AddEntryForm: React.FC<Props> = ({ initialValues, onSubmit, onCancel }) => {
 
   return (
     <Formik
-      initialValues={{
-        type: EntryType.HealthCheck,
-        date: "",
-        description: "",
-        specialist: "",
-        diagnosisCodes: [],
-        healthCheckRating: 0
-      }}
+      initialValues={initialValues}
+      enableReinitialize={true} 
       onSubmit={onSubmit}
       validate={values => {
         const requiredError = "Field is required";
         const invalidFormatError = "Invalid format";
-        const errors: { [field: string]: string } = {};
+        let errors:
+          | { [field: string]: string } 
+          | { 
+              [field: string]: { 
+                [key: string]: string;
+              };
+            } = {};
         if (!isDate(values.date)) {
-          errors.date = invalidFormatError;
+          errors.date = invalidFormatError + ", date format YYYY-MM-DD";
         }
         if (!values.date) {
-          errors.date = requiredError;
+          errors.date = requiredError + ", date format YYYY-MM-DD";
         }
         if (!values.description) {
           errors.description = requiredError;
@@ -52,57 +41,57 @@ export const AddEntryForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
         if (!values.specialist) {
           errors.specialist = requiredError;
         }
-        if (!isHealthCheckRating(values.healthCheckRating)) {
-          errors.healthCheckRating = invalidFormatError;
+        if (values.type === EntryType.HealthCheck) {
+          if (!isHealthCheckRating(values.healthCheckRating)) {
+            errors.healthCheckRating = invalidFormatError + ", accepted rating values: 0 - 3";
+          }
+          if (values.healthCheckRating.toString() === "" ) {
+            errors.healthCheckRating = requiredError;
+          }
         }
-        if (values.healthCheckRating.toString() === "" ) {
-          errors.healthCheckRating = requiredError;
-        }
+        if (values.type === EntryType.Hospital) {
+          if (!values.discharge?.date && !values.discharge?.criteria) {
+            errors = { ...errors, discharge: { date: requiredError, criteria: requiredError } };
+          }
+          if (!values.discharge?.date && values.discharge?.criteria) {
+            errors = { ...errors, discharge: { date: requiredError, criteria: "" } };
+          }
+          if (values.discharge?.date && !values.discharge?.criteria) {
+            errors = { ...errors, discharge: { date: "", criteria: requiredError } };
+            if (!isDate(values.discharge?.date)) {
+              errors = { ...errors, discharge: { date: invalidFormatError + ", date format YYYY-MM-DD", criteria: requiredError } };
+            }
+          }
+          if (values.discharge?.date && values.discharge?.criteria) {
+            if (!isDate(values.discharge?.date)) {
+              errors = { ...errors, discharge: { date: invalidFormatError + ", date format YYYY-MM-DD", criteria: "" } };
+            }
+          }  
+        }      
         return errors;
       }}
     >
-      {({ isValid, dirty, setFieldValue, setFieldTouched }) => {
-        return (
+      {({ isValid, dirty, setFieldValue, setFieldTouched, values }) => {
+        return (   
           <Form className="form ui">
-            <SelectField
-              label="Type"
-              name="type"
-              options={entryTypeOptions}
-            />
-            <Field
-              label="Date"
-              placeholder="YYYY-MM-DD"
-              name="date"
-              component={TextField}
-            />
-            <Field
-              label="Description"
-              placeholder="Description"
-              name="description"
-              component={TextField}
-            />
-            <Field
-              label="Specialist"
-              placeholder="Specialist"
-              name="specialist"
-              component={TextField}
-            />
-            <DiagnosisSelection
-               setFieldValue={setFieldValue}
-               setFieldTouched={setFieldTouched}
-               diagnoses={Object.values(diagnoses)}
-            />   
-            <Field
-              label="Health check rating"
-              placeholder="Health check rating"
-              name="healthCheckRating"
-              component={NumberField}
-              min={0}
-              max={3}
-            />
+
+            <Divider className="ui hidden divider" />
+
+            <BaseEntryFields setFieldValue={setFieldValue} setFieldTouched={setFieldTouched} /> 
+
+            <Divider className="ui hidden divider" />
+
+            <EntryTypeSpecificFields entryType={values.type}/>   
+  
+            <Divider className="ui hidden divider" />
+            
             <Grid>
               <Grid.Column floated="left" width={5}>
-                <Button type="button" onClick={onCancel} color="red">
+                <Button 
+                  type="button"
+                  onClick={onCancel}
+                  color="red"
+                >
                   Cancel
                 </Button>
               </Grid.Column>

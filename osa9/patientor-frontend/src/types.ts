@@ -24,6 +24,12 @@ export type NonSensitivePatientData = Omit<Patient, 'ssn' | 'entries'>;
 
 export type NewPatientEntry = Omit<Patient, 'id'>;
 
+export type NewBaseEntry = Omit<BaseEntry, 'id'>;
+
+export type NewEntry = 
+  | Omit<HealthCheckEntry, 'id'>
+  | Omit<HospitalEntry, 'id'>;
+
 interface BaseEntry {
   id: string;
   description: string;
