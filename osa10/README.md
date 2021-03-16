@@ -2,4 +2,4 @@
 
 #### osa10 exercises
 
-* [rate-repository-app](https://github.com/emakipa/rate-repository-app) (exercises 10.1 - 10.24)
+* [rate-repository-app](https://github.com/emakipa/rate-repository-app) (exercises 10.1 - 10.27 (submitted exercises: 10.1 - 10.24))
