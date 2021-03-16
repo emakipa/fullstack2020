@@ -2,6 +2,10 @@
 
 Exercise submissions for [Full stack open 2020](https://fullstackopen.com/en) course by University of Helsinki.
 
+### osa11
+
+* [full-stack-open-pokedex](https://github.com/emakipa/full-stack-open-pokedex)
+
 ### osa10
 
 * [rate-repository-app](https://github.com/emakipa/rate-repository-app)
@@ -79,9 +83,9 @@ osa7 | 20 / 21
 osa8 | 26 / 26
 osa9 | 27 / 27
 osa10 |27 / 27 (submitted exercises: 10.1 - 10.24)
-osa11 | x / 22
+osa11 | 4 / 22
 ------- | -------------
-total | 227/250
+total | 231/250
 
 
 
