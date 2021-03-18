@@ -2,4 +2,4 @@
 
 #### osa11 exercises
 
-* [full-stack-open-pokedex](https://github.com/emakipa/full-stack-open-pokedex) (exercises 11.1 - 11.12, 11.14 - 11.16)
+* [full-stack-open-pokedex](https://github.com/emakipa/full-stack-open-pokedex) (exercises 11.1 - 11.12, 11.14 - 11.18)
