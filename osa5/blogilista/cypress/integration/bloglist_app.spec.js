@@ -68,7 +68,7 @@ describe('Bloglist app', function() {
       it('a blog can be liked', function() {
         cy.get('#view-button').click()
         cy.get('#like-button').click()
-        //likes is increased by one 
+        //likes is increased by one
         cy.contains('likes 1')
       })
 
@@ -78,7 +78,7 @@ describe('Bloglist app', function() {
         cy.get('#view-button').click()
         cy.get('#remove-button').click()
         cy.get('.success').should('contain', 'blog A blog created by cypress removed')
-        cy.get('A blog created by cypress').should('not.exist')   
+        cy.get('A blog created by cypress').should('not.exist')
       })
     })
 
@@ -101,6 +101,6 @@ describe('Bloglist app', function() {
           cy.wrap(blogs[2]).should('contain', 'A blog0 with zero likes created')
         })
       })
-    })  
+    })
   })
 })

@@ -27,7 +27,7 @@
 //login
 Cypress.Commands.add('login', ({ username, password }) => {
   cy.request('POST', 'http://localhost:3003/api/login', {
-    username, 
+    username,
     password
   }).then(({ body }) => {
     localStorage.setItem('loggedBloglistUser', JSON.stringify(body))
