@@ -2,6 +2,10 @@
 
 Exercise submissions for [Full stack open 2020](https://fullstackopen.com/en) course by University of Helsinki.
 
+### osa12 Containers
+
+* [part12-containers-applications](https://github.com/emakipa/part12-containers-applications.git)
+
 ### osa11 CI/CD
 
 * [full-stack-open-pokedex](https://github.com/emakipa/full-stack-open-pokedex)
@@ -84,8 +88,9 @@ osa8 | 26 / 26
 osa9 | 27 / 27
 osa10 |27 / 27 (submitted exercises: 10.1 - 10.24)
 osa11 |18 / 22
+osa12 |1 / 22
 ------- | -------------
-total | 245/250
+total | 246/272
 
 
 
